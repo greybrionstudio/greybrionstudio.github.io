@@ -1,0 +1,11 @@
+{
+  "works": [
+    {
+      "type": "Tool",
+      "title": "Manual Grid Authoring Tool",
+      "description": "Unity向けのグリッド編集支援ツール。",
+      "image": "assets/images/Tool/MGAT/manual-grid-thumb.png",
+      "link": "works/manual-grid-authoring-tool.html"
+    }
+  ]
+}

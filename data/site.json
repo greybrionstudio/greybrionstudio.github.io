@@ -1,0 +1,16 @@
+{
+  "site": {
+    "title": "Greybrion Studio",
+    "headerTitle": "Greybrion Studio",
+    "releasedHeading": "公開作品"
+  },
+  "paper": {
+    "title": "Greybrion Studio",
+    "subtitle": "異世界の工房のように、世界を創るスタジオ",
+    "lines": [
+      "Greybrion Studio は、",
+      "ゲーム・開発ツール・AIを制作する個人開発スタジオです。",
+      "現在は、シミュレーションゲームと社内専用の開発支援AIを開発しています。"
+    ]
+  }
+}

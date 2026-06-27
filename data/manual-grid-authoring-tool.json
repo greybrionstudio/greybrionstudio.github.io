@@ -1,0 +1,61 @@
+{
+  "type": "⚒ Greybrion Tools",
+
+  "page1": {
+    "title": "Manual Grid Authoring Tool",
+    "catch": "Unity向けのグリッド編集支援ツール。",
+    "mainImage": "../assets/images/Tool/MGAT/manual-grid-thumb.png",
+
+    "overview": [
+      "Manual Grid Authoring Tool は、",
+      "Unity上でグリッド編集を補助するための開発支援ツールです。",
+      "タイル配置や確認作業を効率化し、シミュレーションゲーム制作を支援します。"
+    ],
+
+    "screenshots": [
+      "../assets/images/Tool/MGAT/image1.png",
+      "../assets/images/Tool/MGAT/image2.png",
+      "../assets/images/Tool/MGAT/image3.png",
+      "../assets/images/Tool/MGAT/image4.png",
+      "../assets/images/Tool/MGAT/image5.png"
+    ],
+
+    "video": {
+      "type": "youtube",
+      "url": "https://www.youtube.com/watch?v=XXestj57fzI"
+    }
+  },
+
+  "page2": {
+    "features": [
+      "グリッド画像の読み込み・編集",
+      "タイル座標・IDの確認",
+      "タグ・色・コメントの設定",
+      "オーバーライド編集に対応",
+      "Undo / Redo に対応",
+      "編集データの保存・読み込み",
+      "編集結果を画像としてエクスポート",
+      "Unity向けグリッド制作ワークフローを支援",
+      "シミュレーションゲーム開発を効率化"
+    ],
+    "price": "980円",
+
+    "stores": [
+      {
+        "name": "BOOTH",
+        "url": "https://greybrionstudio.booth.pm/items/8495911"
+      },
+      {
+        "name": "Gumroad",
+        "url": ""
+      }
+    ],
+
+    "updates": [
+      {
+        "date": "2026-06-17",
+        "text": "v1.0 公開"
+      }
+    ]
+  }
+}

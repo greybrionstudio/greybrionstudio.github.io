@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greybrion Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-logo" id="site-title">Greybrion</div>
+
+    <nav class="nav" id="siteNav">
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button">Works</button>
+        <div class="dropdown-menu">
+          <a href="#works">Games</a>
+          <a href="#works">Tools</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button">Studio</button>
+        <div class="dropdown-menu">
+          <a href="#about">About</a>
+          <a href="#philosophy">Philosophy</a>
+          <a href="#profile">Profile</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button">Contact</button>
+        <div class="dropdown-menu">
+          <a href="#contact">Contact</a>
+          <a href="#contact">X</a>
+          <a href="#contact">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="メニューを開く"
+      aria-expanded="false"
+      aria-controls="siteNav"
+      type="button"
+    >
+      ☰
+    </button>
+  </header>
+
+  <main class="hero-layout">
+    <section class="released" id="works">
+      <h2 id="released-heading">RELEASED WORKS</h2>
+
+      <div class="slider is-empty" id="worksSlider">
+        <button class="slider-btn prev" id="prevBtn" aria-label="前へ" type="button">‹</button>
+
+        <div class="slider-window" id="sliderWindow">
+          <div class="slider-track is-empty" id="sliderTrack">
+            <article class="slide-card coming-soon-card">
+              <div class="coming-soon-image">COMING SOON</div>
+              <div class="slide-body">
+                <span class="slide-type">Soon</span>
+                <h3>Coming Soon</h3>
+                <p>公開予定の作品は、今後ここに追加されます。</p>
+                <a href="javascript:void(0)">Stay Tuned</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <button class="slider-btn next" id="nextBtn" aria-label="次へ" type="button">›</button>
+      </div>
+    </section>
+
+    <section class="guild-board" id="about">
+      <div class="paper">
+        <div class="paper-inner">
+          <h1 id="paper-title">Greybrion Studio</h1>
+
+          <p class="sub" id="paper-sub">
+            異世界の工房のように、世界を創るスタジオ
+          </p>
+
+          <div id="paper-body">
+            <p>Greybrion Studio は、</p>
+            <p>ゲーム・ツール・エンジンを開発する個人開発スタジオです。</p>
+            <p>現在、独自エンジン「AscenderEngine」を開発中。</p>
+          </div>
+        </div>
+
+        <div class="seal" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="philosophy">
+      <h2>PHILOSOPHY</h2>
+      <p>
+        構造を大切にし、長く育てられるゲーム・ツール・エンジンを目指して制作しています。
+      </p>
+    </section>
+
+    <section class="contact-section" id="profile">
+      <h2>PROFILE</h2>
+      <p>
+        Greybrion Studio は、個人で世界観と構造を積み上げていく開発スタジオです。
+      </p>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <h2>CONTACT</h2>
+      <p>
+        お問い合わせや今後の情報公開については、準備が整い次第こちらに追加予定です。
+      </p>
+    </section>
+  </main>
+
+  <script src="js/menu.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

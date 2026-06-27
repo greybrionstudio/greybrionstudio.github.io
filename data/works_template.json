@@ -1,0 +1,25 @@
+{
+  "works": [
+    {
+      "type": "Tool",
+      "title": "Task Forge",
+      "description": "制作や開発向けのタスク整理・時間管理ツール。",
+      "image": "assets/images/sample1.jpg",
+      "link": "#"
+    },
+    {
+      "type": "Game",
+      "title": "Ashen March",
+      "description": "暗い世界を旅する、幻想寄りの作品。",
+      "image": "assets/images/sample2.jpg",
+      "link": "#"
+    },
+    {
+      "type": "Engine",
+      "title": "AscenderEngine",
+      "description": "モジュール分離を重視した独自開発エンジン。",
+      "image": "assets/images/sample3.jpg",
+      "link": "#"
+    }
+  ]
+}
