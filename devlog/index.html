@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development Log - Greybrion Studio</title>
+  <meta name="description"
+    content="Greybrion Studioの開発ログ。ゲーム開発・ツール開発・AscenderAI開発の進捗を公開しています。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/devlog.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-logo" id="site-title" href="../index.html">
+      Greybrion Studio
+    </a>
+
+    <nav class="nav" id="siteNav">
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button">Works</button>
+        <div class="dropdown-menu">
+          <a href="../index.html#works">Games</a>
+          <a href="../index.html#works">Tools</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="nav-link" href="../devlog/index.html">Dev Log</a>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button">Studio</button>
+        <div class="dropdown-menu">
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#philosophy">Philosophy</a>
+          <a href="../index.html#profile">Profile</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button">Contact</button>
+        <div class="dropdown-menu">
+          <a href="../index.html#contact">Contact</a>
+          <a href="../index.html#contact">X</a>
+          <a href="../index.html#contact">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="メニューを開く"
+      aria-expanded="false"
+      aria-controls="siteNav"
+      type="button"
+    >
+      ☰
+    </button>
+  </header>
+
+  <main class="devlog-layout">
+    <h1 class="devlog-page-title">Development Log</h1>
+
+    <div class="devlog-categories" id="devlogCategories"></div>
+
+    <h2 class="devlog-category-heading" id="devlogCategoryTitle"></h2>
+
+    <div class="devlog-subtabs" id="devlogSubtabs"></div>
+
+    <div class="devlog-log-area" id="devlogEntries"></div>
+  </main>
+
+  <script src="../js/menu.js"></script>
+  <script src="../js/devlog.js"></script>
+</body>
+</html>

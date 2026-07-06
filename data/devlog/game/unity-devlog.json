@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "projectId": "unity",
+  "lastUpdated": "2026-07-06",
+  "logs": [
+    {
+      "id": "unity-20260706-001",
+      "date": "2026-07-06",
+      "title": {
+        "ja": "隊列移動の実装",
+        "en": "Implemented Formation Movement"
+      },
+      "body": {
+        "ja": "ユニットが隊列を維持したまま移動できるようになりました。グリッド上でのパスファインディングと連携し、隊形を崩さずに目標地点へ到達します。",
+        "en": "Units can now move while maintaining formation. Path-finding on the grid works in coordination to reach the destination without breaking formation."
+      },
+      "tags": ["gameplay", "movement"]
+    },
+    {
+      "id": "unity-20260705-001",
+      "date": "2026-07-05",
+      "title": {
+        "ja": "ターン管理システム構築",
+        "en": "Built Turn Management System"
+      },
+      "body": {
+        "ja": "フェーズベースのターン管理システムを構築しました。プレイヤーフェーズ・敵フェーズ・イベントフェーズの切り替えが正しく動作します。",
+        "en": "Built a phase-based turn management system. Switching between player phase, enemy phase, and event phase now works correctly."
+      },
+      "tags": ["system", "turn"]
+    },
+    {
+      "id": "unity-20260703-001",
+      "date": "2026-07-03",
+      "title": {
+        "ja": "グリッドマップ生成の最適化",
+        "en": "Optimized Grid Map Generation"
+      },
+      "body": {
+        "ja": "大規模マップ生成時のパフォーマンスを改善しました。100x100グリッドでも初期化が1秒以内に完了します。",
+        "en": "Improved performance for large map generation. Even a 100x100 grid initializes within 1 second."
+      },
+      "tags": ["performance", "grid"]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "projectId": "manual-grid-authoring-tool",
+  "lastUpdated": "2026-07-04",
+  "logs": [
+    {
+      "id": "manual-grid-authoring-tool-20260704-001",
+      "date": "2026-07-04",
+      "title": {
+        "ja": "エクスポート機能の改善",
+        "en": "Improved Export Feature"
+      },
+      "body": {
+        "ja": "画像エクスポート時の解像度設定を追加しました。1x / 2x / 4x から選択可能です。",
+        "en": "Added resolution settings for image export. Users can choose from 1x / 2x / 4x."
+      },
+      "tags": ["feature", "export"]
+    },
+    {
+      "id": "manual-grid-authoring-tool-20260702-001",
+      "date": "2026-07-02",
+      "title": {
+        "ja": "Undo/Redo スタックの安定化",
+        "en": "Stabilized Undo/Redo Stack"
+      },
+      "body": {
+        "ja": "大量の編集操作を行った際にUndo/Redoスタックが不安定になる問題を修正しました。",
+        "en": "Fixed an issue where the Undo/Redo stack became unstable after a large number of edit operations."
+      },
+      "tags": ["bugfix", "undo"]
+    }
+  ]
+}

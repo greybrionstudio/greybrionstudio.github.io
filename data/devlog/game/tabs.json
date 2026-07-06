@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "categoryId": "game",
+  "lastUpdated": "2026-07-06",
+  "tabs": [
+    {
+      "id": "unity",
+      "name": {
+        "ja": "Unity",
+        "en": "Unity"
+      },
+      "logFile": "game/unity-devlog.json"
+    }
+  ]
+}

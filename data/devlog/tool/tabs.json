@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "categoryId": "tool",
+  "lastUpdated": "2026-07-04",
+  "tabs": [
+    {
+      "id": "manual-grid-authoring-tool",
+      "name": {
+        "ja": "Manual Grid Authoring Tool",
+        "en": "Manual Grid Authoring Tool"
+      },
+      "logFile": "tool/manual-grid-authoring-tool-devlog.json"
+    }
+  ]
+}

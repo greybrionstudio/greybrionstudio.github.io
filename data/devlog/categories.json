@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-07-06",
+  "categories": [
+    {
+      "id": "game",
+      "name": {
+        "ja": "ゲーム開発",
+        "en": "Game Development"
+      },
+      "hasTabs": true,
+      "tabsFile": "game/tabs.json"
+    },
+    {
+      "id": "tool",
+      "name": {
+        "ja": "ツール開発",
+        "en": "Tool Development"
+      },
+      "hasTabs": true,
+      "tabsFile": "tool/tabs.json"
+    },
+    {
+      "id": "ascenderai",
+      "name": {
+        "ja": "AscenderAI開発",
+        "en": "AscenderAI Development"
+      },
+      "hasTabs": false,
+      "logFile": "ascenderai/ascenderai-devlog.json"
+    }
+  ]
+}
