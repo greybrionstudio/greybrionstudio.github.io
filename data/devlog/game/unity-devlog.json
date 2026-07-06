@@ -1,46 +1,98 @@
 {
   "version": "1.0",
   "projectId": "unity",
-  "lastUpdated": "2026-07-06",
+  "lastUpdated": "2026-06-24",
   "logs": [
     {
-      "id": "unity-20260706-001",
-      "date": "2026-07-06",
+      "id": "unity-20260624-001",
+      "date": "2026-06-24",
       "title": {
-        "ja": "隊列移動の実装",
-        "en": "Implemented Formation Movement"
+        "ja": "隊列移動コマンドを実装",
+        "en": "Implemented Formation Move Command"
       },
       "body": {
-        "ja": "ユニットが隊列を維持したまま移動できるようになりました。グリッド上でのパスファインディングと連携し、隊形を崩さずに目標地点へ到達します。",
-        "en": "Units can now move while maintaining formation. Path-finding on the grid works in coordination to reach the destination without breaking formation."
+        "ja": "右クリックドラッグで隊列の向きを指定し、選択したユニットを隊列のまま移動できるようになりました。障害物や移動できない地形を考慮して配置を自動調整し、ドラッグ中はプレビューで最終配置を確認できます。",
+        "en": "Units can now move while maintaining formation by specifying the formation direction with a right-click drag. Formation positions are automatically adjusted around obstacles and impassable terrain, and a preview displays the planned formation during dragging."
       },
-      "tags": ["gameplay", "movement"]
+      "tags": ["gameplay", "formation", "movement"]
     },
     {
-      "id": "unity-20260705-001",
-      "date": "2026-07-05",
+      "id": "unity-20260617-001",
+      "date": "2026-06-17",
       "title": {
-        "ja": "ターン管理システム構築",
-        "en": "Built Turn Management System"
+        "ja": "目的地の自動再割当を実装",
+        "en": "Implemented Destination Reassignment"
       },
       "body": {
-        "ja": "フェーズベースのターン管理システムを構築しました。プレイヤーフェーズ・敵フェーズ・イベントフェーズの切り替えが正しく動作します。",
-        "en": "Built a phase-based turn management system. Switching between player phase, enemy phase, and event phase now works correctly."
+        "ja": "目的地が他のユニットに占有されている場合、周辺の空きタイルへ自動的に目的地を再割り当てするようになりました。複数のユニットを同じ場所へ移動させても、重ならず自然に分散して到着します。",
+        "en": "When a destination is already occupied, units now automatically select a nearby available tile. Multiple units ordered to the same location will spread out naturally instead of overlapping."
       },
-      "tags": ["system", "turn"]
+      "tags": ["gameplay", "movement", "occupancy"]
     },
     {
-      "id": "unity-20260703-001",
-      "date": "2026-07-03",
+      "id": "unity-20260616-001",
+      "date": "2026-06-16",
       "title": {
-        "ja": "グリッドマップ生成の最適化",
-        "en": "Optimized Grid Map Generation"
+        "ja": "ユニット占有判定システムを追加",
+        "en": "Added Unit Occupancy System"
       },
       "body": {
-        "ja": "大規模マップ生成時のパフォーマンスを改善しました。100x100グリッドでも初期化が1秒以内に完了します。",
-        "en": "Improved performance for large map generation. Even a 100x100 grid initializes within 1 second."
+        "ja": "各タイルのユニット占有状態を管理する仕組みを追加しました。移動中のユニット同士が同じ場所に重ならなくなり、複数ユニットでも自然な移動が行えるようになりました。",
+        "en": "Added a tile occupancy management system. Units no longer overlap on the same tile while moving, resulting in more natural movement for groups."
       },
-      "tags": ["performance", "grid"]
+      "tags": ["gameplay", "movement", "occupancy"]
+    },
+    {
+      "id": "unity-20260615-001",
+      "date": "2026-06-15",
+      "title": {
+        "ja": "複数ユニットの同時移動に対応",
+        "en": "Enabled Multi-Unit Movement"
+      },
+      "body": {
+        "ja": "複数のユニットを選択し、一度の操作で同時に移動できるようになりました。各ユニットが個別に経路を計算し、移動に合わせて経路表示も自動で更新されます。",
+        "en": "Multiple selected units can now move simultaneously with a single command. Each unit calculates its own path, and path indicators update automatically as movement progresses."
+      },
+      "tags": ["gameplay", "movement", "selection"]
+    },
+    {
+      "id": "unity-20260614-001",
+      "date": "2026-06-14",
+      "title": {
+        "ja": "右クリックによる移動を実装",
+        "en": "Implemented Right-Click Movement"
+      },
+      "body": {
+        "ja": "右クリックした地点までユニットが自動で経路を計算して移動するようになりました。障害物や移動できない地形を避けながら、最適なルートで目的地へ向かいます。",
+        "en": "Units now automatically calculate a path to the destination selected with a right-click. They navigate around obstacles and impassable terrain to reach their destination efficiently."
+      },
+      "tags": ["gameplay", "movement", "pathfinding"]
+    },
+    {
+      "id": "unity-20260612-001",
+      "date": "2026-06-12",
+      "title": {
+        "ja": "経路探索システムを実装",
+        "en": "Implemented Pathfinding System"
+      },
+      "body": {
+        "ja": "障害物を避けながら目的地までの最適な経路を探索するシステムを実装しました。地形ごとの移動制限や移動コストを考慮し、より自然な移動ルートを生成します。",
+        "en": "Implemented a pathfinding system that finds optimal routes while avoiding obstacles. Terrain restrictions and movement costs are taken into account to generate natural movement paths."
+      },
+      "tags": ["system", "pathfinding", "movement"]
+    },
+    {
+      "id": "unity-20260610-001",
+      "date": "2026-06-10",
+      "title": {
+        "ja": "地形による移動制限を実装",
+        "en": "Implemented Terrain-Based Movement Restrictions"
+      },
+      "body": {
+        "ja": "地形ごとの移動制限と移動コストを実装しました。草地・山地・水場などの違いを考慮し、それぞれの地形特性に応じた移動が行われるようになりました。",
+        "en": "Implemented terrain-based movement restrictions and movement costs. Different terrain types such as grassland, mountains, and water now affect how units move across the map."
+      },
+      "tags": ["gameplay", "movement", "terrain"]
     }
   ]
 }
