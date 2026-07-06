@@ -3,3 +3,5 @@ answer.txt
 
 # Documentation (ローカル用の場合)
 docs/
+
+.vscode/
