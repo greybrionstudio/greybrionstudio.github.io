@@ -186,8 +186,8 @@ body {
 
 .devlog-date {
   display: block;
-  font-size: 0.85rem;
-  color: #888;
+  font-size: 0.9rem;
+  color: #000000;
   margin-bottom: 6px;
 }
 
@@ -311,6 +311,7 @@ body {
 
   .devlog-date {
     font-size: 0.78rem;
+    font-weight: 700;
   }
 
   .devlog-title {
