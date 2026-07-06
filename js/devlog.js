@@ -224,6 +224,18 @@
       var titleStr = escapeHtml(getLocalized(log.title));
       var bodyStr = escapeHtml(getLocalized(log.body));
 
+      var imageHtml = "";
+      if (log.image) {
+        imageHtml =
+          '<div class="devlog-image-wrapper">' +
+            '<img class="devlog-image" src="' +
+            escapeHtml(log.image) +
+            '" alt="' +
+            titleStr +
+            '">' +
+          "</div>";
+      }
+
       var tagsHtml = "";
       if (Array.isArray(log.tags) && log.tags.length > 0) {
         tagsHtml =
@@ -240,6 +252,7 @@
         '<time class="devlog-date">' + dateStr + "</time>" +
         '<h3 class="devlog-title">' + titleStr + "</h3>" +
         '<p class="devlog-body">' + bodyStr + "</p>" +
+        imageHtml +
         tagsHtml;
 
       logContainer.appendChild(entry);

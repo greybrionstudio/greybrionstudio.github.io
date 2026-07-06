@@ -14,6 +14,7 @@
         "ja": "AIの処理状況を表示するフロータブに、PCの稼働状況（GPU・VRAM・CPU・メモリ）のリアルタイム表示を追加しました。使用率に応じた色分けにより、システム負荷を一目で確認できます。",
         "en": "Added real-time PC performance monitoring (GPU, VRAM, CPU, and Memory) to the Flow tab. Color-coded indicators make it easy to understand the current system load at a glance."
       },
+      "image": "../assets/images/devLog/AscenderAI/AscenderAI_001.png",
       "tags": [
         "feature",
         "ui",
@@ -31,6 +32,7 @@
         "ja": "AIアシスタントが関連する情報を整理し、必要な知識を活用しながら自然な日本語で応答できるようになりました。これにより、より一貫性のある対話体験を提供します。",
         "en": "The AI assistant can now organize relevant information, make use of available knowledge, and generate natural responses. This provides a more consistent conversational experience."
       },
+      "image": null,
       "tags": [
         "feature",
         "ai",
@@ -48,6 +50,7 @@
         "ja": "AIが会話を処理している際の進捗状況をリアルタイムで確認できるフロー表示を追加しました。各処理ステップの状態や処理時間を分かりやすく確認できます。",
         "en": "Added a Flow view that displays real-time progress while the AI processes conversations. Users can easily track each processing step and its elapsed time."
       },
+      "image": null,
       "tags": [
         "feature",
         "ui",
@@ -65,6 +68,7 @@
         "ja": "会話内容と関連する情報を整理し、AIが回答に必要な情報を効率よく活用できる基盤を構築しました。",
         "en": "Built the foundation for organizing conversation history and related information so the AI can efficiently use what it needs to generate responses."
       },
+      "image": null,
       "tags": [
         "foundation",
         "ai",
@@ -82,6 +86,7 @@
         "ja": "AIが会話内容から関連情報を見つけられるよう検索機能を強化しました。より正確で根拠のある回答を支援します。",
         "en": "Enhanced the AI's ability to discover relevant information from conversations, helping provide more accurate and evidence-based responses."
       },
+      "image": null,
       "tags": [
         "feature",
         "knowledge",
@@ -99,6 +104,7 @@
         "ja": "ユーザーの発話を分析し、意図の判定や要約、回答に役立つ情報を抽出する機能を実装しました。より適切な対話を支援します。",
         "en": "Implemented conversation analysis that identifies user intent, generates summaries, and extracts useful information to support better responses."
       },
+      "image": null,
       "tags": [
         "feature",
         "ai",
@@ -116,6 +122,7 @@
         "ja": "チャットインターフェースを整備し、会話表示、自動スクロール、コピー、ステータス表示など、快適に利用できる基本機能を実装しました。",
         "en": "Established the chat interface with essential usability features including conversation bubbles, auto-scroll, text copy, and status display."
       },
+      "image": null,
       "tags": [
         "foundation",
         "ui",
@@ -133,6 +140,7 @@
         "ja": "AscenderAIの開発を開始しました。プロジェクト内の知識を活用し、より自然で信頼性の高い対話を実現するAIアシスタントの開発を進めています。",
         "en": "Started the AscenderAI project. Our goal is to build an AI assistant that leverages project knowledge to provide natural and reliable conversations."
       },
+      "image": null,
       "tags": [
         "project",
         "foundation",

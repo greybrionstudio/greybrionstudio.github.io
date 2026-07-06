@@ -211,6 +211,22 @@ body {
   flex-wrap: wrap;
 }
 
+/* ========================= */
+/* ログ画像                  */
+/* ========================= */
+
+.devlog-image-wrapper {
+  margin: 16px 0;
+}
+
+.devlog-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .devlog-tag {
   display: inline-block;
   padding: 3px 10px;
@@ -326,5 +342,13 @@ body {
   .devlog-tag {
     font-size: 0.72rem;
     padding: 2px 8px;
+  }
+
+  .devlog-image-wrapper {
+    margin: 12px 0;
+  }
+
+  .devlog-image {
+    border-radius: 8px;
   }
 }

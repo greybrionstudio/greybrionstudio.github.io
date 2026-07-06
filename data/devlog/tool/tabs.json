@@ -9,6 +9,7 @@
         "ja": "Manual Grid Authoring Tool",
         "en": "Manual Grid Authoring Tool"
       },
+      "image": null,
       "logFile": "tool/manual-grid-authoring-tool-devlog.json"
     }
   ]
