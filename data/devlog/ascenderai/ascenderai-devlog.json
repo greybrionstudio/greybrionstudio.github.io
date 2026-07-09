@@ -4,6 +4,24 @@
   "lastUpdated": "2026-07-06",
   "logs": [
     {
+      "id": "ascenderai-20260709-001",
+      "date": "2026-07-09",
+      "title": {
+        "ja": "会話履歴管理機能の追加",
+        "en": "Added Conversation History Management"
+      },
+      "body": {
+        "ja": "会話履歴の一覧表示や切り替え、名称変更、削除などの管理機能を追加しました。チャットアプリのような操作性を目指し、過去の会話へ素早くアクセスできるよう改善しています。",
+        "en": "Added conversation history management, including browsing, switching, renaming, and deleting conversations. The interface has been improved to provide a chat application–like experience and make it easier to revisit previous conversations."
+      },
+      "image": null,
+      "tags": [
+        "feature",
+        "ui",
+        "conversation"
+      ]
+    },
+    {
       "id": "ascenderai-20260706-004",
       "date": "2026-07-06",
       "title": {
