@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Greybrion Studio</title>
-    <meta name="description"
-      content="Greybrion Studioは、Unity向け開発ツール、AI開発支援ツール、オリジナルゲームを開発する個人開発スタジオです。『Manual Grid Authoring Tool』を公開中。">
+  <meta name="description" id="metaDescription"
+    content="Greybrion Studioは、Unity向け開発ツール、AI開発支援ツール、オリジナルゲームを開発する個人開発スタジオです。『Manual Grid Authoring Tool』を公開中。">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,32 +23,43 @@
 
     <nav class="nav" id="siteNav">
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">Works</button>
+        <button class="nav-link dropdown-toggle" type="button" id="navWorks">Works</button>
         <div class="dropdown-menu">
-          <a href="#works">Games</a>
-          <a href="#works">Tools</a>
+          <a href="#works" id="navGames">Games</a>
+          <a href="#works" id="navTools">Tools</a>
         </div>
       </div>
 
       <div class="nav-item">
-        <a class="nav-link" href="devlog/index.html">Dev Log</a>
+        <a class="nav-link" href="devlog/index.html" id="navDevlog">Dev Log</a>
       </div>
 
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">Studio</button>
+        <button class="nav-link dropdown-toggle" type="button" id="navStudio">Studio</button>
         <div class="dropdown-menu">
-          <a href="#about">About</a>
-          <a href="#philosophy">Philosophy</a>
-          <a href="#profile">Profile</a>
+          <a href="#about" id="navAbout">About</a>
+          <a href="#philosophy" id="navPhilosophy">Philosophy</a>
+          <a href="#profile" id="navProfile">Profile</a>
         </div>
       </div>
 
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">Contact</button>
+        <button class="nav-link dropdown-toggle" type="button" id="navContact">Contact</button>
         <div class="dropdown-menu">
-          <a href="#contact">Contact</a>
-          <a href="#contact">X</a>
-          <a href="#contact">GitHub</a>
+          <a href="#contact" id="navContactLink">Contact</a>
+          <li id="navBlueskyItem" hidden>
+            <a id="navBlueskyLink" href="" target="_blank" rel="noopener noreferrer">
+              <span id="navBluesky">Bluesky</span>
+            </a>
+          </li>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button" id="navLanguage">Language</button>
+        <div class="dropdown-menu">
+          <button type="button" class="lang-option" data-lang="ja">日本語</button>
+          <button type="button" class="lang-option" data-lang="en">English</button>
         </div>
       </div>
     </nav>
@@ -105,27 +116,25 @@
     </section>
 
     <section class="contact-section" id="philosophy">
-      <h2>PHILOSOPHY</h2>
-      <p>
-        構造を大切にし、長く育てられるゲーム・Unity向け開発ツール・AI開発支援ツールを目指して制作しています。
+      <h2 id="philosophy-heading">PHILOSOPHY</h2>
+      <p id="philosophy-body">
       </p>
     </section>
 
     <section class="contact-section" id="profile">
-      <h2>PROFILE</h2>
-      <p>
-        Greybrion Studio は、個人で世界観と構造を積み上げていく開発スタジオです。
+      <h2 id="profile-heading">PROFILE</h2>
+      <p id="profile-body">
       </p>
     </section>
 
     <section class="contact-section" id="contact">
-      <h2>CONTACT</h2>
-      <p>
-        お問い合わせや今後の情報公開については、準備が整い次第こちらに追加予定です。
+      <h2 id="contact-heading">CONTACT</h2>
+      <p id="contact-body">
       </p>
     </section>
   </main>
 
+  <script src="js/language.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/main.js"></script>
 </body>

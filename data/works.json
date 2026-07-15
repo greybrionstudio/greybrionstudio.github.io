@@ -3,7 +3,10 @@
     {
       "type": "Tool",
       "title": "Manual Grid Authoring Tool",
-      "description": "Unity向けのグリッド編集支援ツール。",
+      "description": {
+        "ja": "Unity向けのグリッド編集支援ツール。",
+        "en": "A grid editing tool for Unity."
+      },
       "image": "assets/images/Tool/MGAT/manual-grid-thumb.png",
       "link": "works/manual-grid-authoring-tool.html"
     }

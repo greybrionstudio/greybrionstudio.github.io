@@ -8,54 +8,172 @@
   "use strict";
 
   // =========================
+  // 言語ヘルパー（language.js から取得）
+  // =========================
+  var getLocalized = window.GreybrionLang.getLocalized;
+  var getCurrentLanguage = window.GreybrionLang.getCurrentLanguage;
+  var setLanguage = window.GreybrionLang.setLanguage;
+
+  // =========================
   // パス定義（集約）
   // =========================
-  const SITE_ROOT = "../";
-  const DEVLOG_ROOT = SITE_ROOT + "data/devlog/";
-  const CATEGORY_JSON = DEVLOG_ROOT + "categories.json";
+  var SITE_ROOT = "../";
+  var DEVLOG_ROOT = SITE_ROOT + "data/devlog/";
+  var CATEGORY_JSON = DEVLOG_ROOT + "categories.json";
+  var SITE_JSON = SITE_ROOT + "data/site.json";
 
   // =========================
-  // 言語設定
+  // UI文言（フォールバック用）
   // =========================
-  const DEFAULT_LANGUAGE = "ja";
-  const LANGUAGE_STORAGE_KEY = "greybrion.language";
-
-  function getCurrentLanguage() {
-    return localStorage.getItem(LANGUAGE_STORAGE_KEY) || DEFAULT_LANGUAGE;
-  }
+  var UI_STRINGS = {
+    emptyLog: { ja: "ログはまだありません。", en: "No logs yet." },
+    pageTitle: { ja: "Development Log", en: "Development Log" },
+    metaDescription: {
+      ja: "Greybrion Studioの開発ログ。ゲーム開発・ツール開発・AscenderAI開発の進捗を公開しています。",
+      en: "Development log for Greybrion Studio. Updates on game development, tool development, and AscenderAI."
+    }
+  };
 
   // =========================
   // DOM要素
   // =========================
-  let categoryContainer = null;
-  let subtabContainer = null;
-  let logContainer = null;
-  let categoryTitle = null;
+  var categoryContainer = null;
+  var subtabContainer = null;
+  var logContainer = null;
+  var categoryTitle = null;
+  var pageTitleEl = null;
 
   // =========================
   // 状態
   // =========================
-  let categories = [];
-  let activeCategory = null;
-  let activeTabs = [];
-  let activeTabIndex = 0;
+  var categories = [];
+  var activeCategory = null;
+  var activeTabs = [];
+  var activeTabIndex = 0;
+
+  // サイトデータ（ナビ文言用）
+  var siteNavData = null;
 
   // =========================
   // ユーティリティ
   // =========================
-  function getLocalized(obj) {
-    if (typeof obj === "string") return obj;
-    if (obj && typeof obj === "object") {
-      var lang = getCurrentLanguage();
-      return obj[lang] || obj["ja"] || obj["en"] || "";
-    }
-    return "";
-  }
-
   function escapeHtml(text) {
-    const div = document.createElement("div");
+    var div = document.createElement("div");
     div.textContent = text ?? "";
     return div.innerHTML;
+  }
+
+  // =========================
+  // ナビゲーション文言更新
+  // =========================
+  function updateNavLabels(nav) {
+    if (!nav) return;
+
+    var items = {
+      navWorks: nav.works,
+      navGames: nav.games,
+      navTools: nav.tools,
+      navDevlog: nav.devlog,
+      navStudio: nav.studio,
+      navAbout: nav.about,
+      navPhilosophy: nav.philosophy,
+      navProfile: nav.profile,
+      navContact: nav.contact,
+      navContactLink: nav.contact,
+      navBluesky: nav.bluesky,
+      navLanguage: nav.language
+    };
+
+    Object.keys(items).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && items[id]) {
+        el.textContent = getLocalized(items[id]);
+      }
+    });
+
+    // Language選択肢のラベル
+    var langOptions = document.querySelectorAll(".lang-option");
+    langOptions.forEach(function (btn) {
+      var lang = btn.getAttribute("data-lang");
+      if (lang === "ja" && nav.langJa) {
+        btn.textContent = getLocalized(nav.langJa);
+      } else if (lang === "en" && nav.langEn) {
+        btn.textContent = getLocalized(nav.langEn);
+      }
+    });
+
+    // メニューボタンのaria-label
+    var menuToggle = document.getElementById("menuToggle");
+    if (menuToggle && siteNavData && siteNavData.ui && siteNavData.ui.menuOpen) {
+      menuToggle.setAttribute("aria-label", getLocalized(siteNavData.ui.menuOpen));
+    }
+  }
+
+  // =========================
+  // 外部リンク設定
+  // =========================
+  function updateExternalLinks(links) {
+    var item = document.getElementById("navBlueskyItem");
+    var link = document.getElementById("navBlueskyLink");
+    if (!item || !link) {
+      return;
+    }
+    var url =
+      links &&
+      typeof links.bluesky === "string"
+        ? links.bluesky.trim()
+        : "";
+    var valid =
+      url.startsWith("https://") ||
+      url.startsWith("http://");
+    if (!valid) {
+      item.hidden = true;
+      link.removeAttribute("href");
+      return;
+    }
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    item.hidden = false;
+  }
+
+  // =========================
+  // Language選択イベント設定
+  // =========================
+  function setupLanguageSelector() {
+    var langOptions = document.querySelectorAll(".lang-option");
+    langOptions.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var lang = btn.getAttribute("data-lang");
+        if (lang) {
+          setLanguage(lang);
+        }
+      });
+
+      // 現在の言語にactiveクラスを付与
+      var lang = btn.getAttribute("data-lang");
+      if (lang === getCurrentLanguage()) {
+        btn.classList.add("active");
+      }
+    });
+  }
+
+  // =========================
+  // サイト設定読み込み（ナビ文言・メタ情報用）
+  // =========================
+  async function loadSiteNav() {
+    try {
+      var res = await fetch(SITE_JSON, { cache: "no-store" });
+      if (!res.ok) return;
+      siteNavData = await res.json();
+      var nav = siteNavData.nav || {};
+      updateNavLabels(nav);
+      updateExternalLinks(siteNavData.links || {});
+    } catch (err) {
+      console.error("site.json (nav) error:", err);
+    }
   }
 
   // =========================
@@ -63,7 +181,7 @@
   // =========================
   async function fetchJson(path) {
     try {
-      const res = await fetch(path, { cache: "no-store" });
+      var res = await fetch(path, { cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status + ": " + path);
       return await res.json();
     } catch (err) {
@@ -80,7 +198,7 @@
     categoryContainer.innerHTML = "";
 
     categories.forEach(function (cat, index) {
-      const btn = document.createElement("button");
+      var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "devlog-category-btn";
       btn.textContent = getLocalized(cat.name);
@@ -113,8 +231,8 @@
     }
 
     if (activeCategory.hasTabs) {
-      const tabsPath = DEVLOG_ROOT + activeCategory.tabsFile;
-      const tabsData = await fetchJson(tabsPath);
+      var tabsPath = DEVLOG_ROOT + activeCategory.tabsFile;
+      var tabsData = await fetchJson(tabsPath);
 
       if (tabsData && Array.isArray(tabsData.tabs)) {
         activeTabs = tabsData.tabs;
@@ -128,8 +246,8 @@
       subtabContainer.innerHTML = "";
       subtabContainer.classList.add("hidden");
 
-      const logPath = DEVLOG_ROOT + activeCategory.logFile;
-      const logData = await fetchJson(logPath);
+      var logPath = DEVLOG_ROOT + activeCategory.logFile;
+      var logData = await fetchJson(logPath);
 
       if (logData && Array.isArray(logData.logs)) {
         renderLogs(logData.logs);
@@ -155,7 +273,7 @@
     subtabContainer.classList.remove("hidden");
 
     activeTabs.forEach(function (tab, index) {
-      const btn = document.createElement("button");
+      var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "devlog-subtab-btn";
       btn.textContent = getLocalized(tab.name);
@@ -180,14 +298,14 @@
     activeTabIndex = index;
     renderSubtabs();
 
-    const tab = activeTabs[index];
+    var tab = activeTabs[index];
     if (!tab) {
       renderLogs([]);
       return;
     }
 
-    const logPath = DEVLOG_ROOT + tab.logFile;
-    const logData = await fetchJson(logPath);
+    var logPath = DEVLOG_ROOT + tab.logFile;
+    var logData = await fetchJson(logPath);
 
     if (logData && Array.isArray(logData.logs)) {
       renderLogs(logData.logs);
@@ -204,7 +322,7 @@
     logContainer.innerHTML = "";
 
     if (!Array.isArray(logs) || logs.length === 0) {
-      logContainer.innerHTML = '<p class="devlog-empty">ログはまだありません。</p>';
+      logContainer.innerHTML = '<p class="devlog-empty">' + escapeHtml(getLocalized(UI_STRINGS.emptyLog)) + '</p>';
       return;
     }
 
@@ -267,7 +385,26 @@
     subtabContainer = document.getElementById("devlogSubtabs");
     logContainer = document.getElementById("devlogEntries");
     categoryTitle = document.getElementById("devlogCategoryTitle");
+    pageTitleEl = document.getElementById("devlogPageTitle");
 
+    // Language選択セットアップ
+    setupLanguageSelector();
+
+    // ページタイトル・メタ情報更新
+    if (pageTitleEl) {
+      pageTitleEl.textContent = getLocalized(UI_STRINGS.pageTitle);
+    }
+    document.title = getLocalized(UI_STRINGS.pageTitle) + " - Greybrion Studio";
+
+    var metaEl = document.getElementById("metaDescription");
+    if (metaEl) {
+      metaEl.setAttribute("content", getLocalized(UI_STRINGS.metaDescription));
+    }
+
+    // サイトナビ文言読み込み
+    await loadSiteNav();
+
+    // カテゴリ読み込み
     var data = await fetchJson(CATEGORY_JSON);
     if (!data || !Array.isArray(data.categories)) {
       console.error("categories.json の読み込みに失敗しました");

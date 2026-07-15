@@ -24,38 +24,43 @@
 
     <nav class="nav" id="siteNav">
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">
-          Works
-        </button>
+        <button class="nav-link dropdown-toggle" type="button" id="navWorks">Works</button>
         <div class="dropdown-menu">
-          <a href="../index.html#works">Games</a>
-          <a href="../index.html#works">Tools</a>
+          <a href="../index.html#works" id="navGames">Games</a>
+          <a href="../index.html#works" id="navTools">Tools</a>
         </div>
       </div>
 
       <div class="nav-item">
-        <a class="nav-link" href="../devlog/index.html">Dev Log</a>
+        <a class="nav-link" href="../devlog/index.html" id="navDevlog">Dev Log</a>
       </div>
 
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">
-          Studio
-        </button>
+        <button class="nav-link dropdown-toggle" type="button" id="navStudio">Studio</button>
         <div class="dropdown-menu">
-          <a href="../index.html#about">About</a>
-          <a href="../index.html#philosophy">Philosophy</a>
-          <a href="../index.html#profile">Profile</a>
+          <a href="../index.html#about" id="navAbout">About</a>
+          <a href="../index.html#philosophy" id="navPhilosophy">Philosophy</a>
+          <a href="../index.html#profile" id="navProfile">Profile</a>
         </div>
       </div>
 
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">
-          Contact
-        </button>
+        <button class="nav-link dropdown-toggle" type="button" id="navContact">Contact</button>
         <div class="dropdown-menu">
-          <a href="../index.html#contact">Contact</a>
-          <a href="../index.html#contact">X</a>
-          <a href="../index.html#contact">GitHub</a>
+          <a href="../index.html#contact" id="navContactLink">Contact</a>
+          <li id="navBlueskyItem" hidden>
+            <a id="navBlueskyLink" href="" target="_blank" rel="noopener noreferrer">
+              <span id="navBluesky">Bluesky</span>
+            </a>
+          </li>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button" id="navLanguage">Language</button>
+        <div class="dropdown-menu">
+          <button type="button" class="lang-option" data-lang="ja">日本語</button>
+          <button type="button" class="lang-option" data-lang="en">English</button>
         </div>
       </div>
     </nav>
@@ -73,7 +78,7 @@
   </header>
 
   <main class="work-page">
-    <a class="back-link" href="../index.html">
+    <a class="back-link" href="../index.html" id="backLink">
       ← Greybrion Studioへ戻る
     </a>
 
@@ -82,6 +87,7 @@
     </section>
   </main>
 
+  <script src="../js/language.js"></script>
   <script src="../js/menu.js"></script>
   <script src="../js/work-detail.js"></script>
 </body>

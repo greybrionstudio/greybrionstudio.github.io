@@ -3,14 +3,24 @@
 
   "page1": {
     "title": "Manual Grid Authoring Tool",
-    "catch": "Unity向けのグリッド編集支援ツール。",
+    "catch": {
+      "ja": "Unity向けのグリッド編集支援ツール。",
+      "en": "A grid editing tool for Unity."
+    },
     "mainImage": "../assets/images/Tool/MGAT/manual-grid-thumb.png",
 
-    "overview": [
-      "Manual Grid Authoring Tool は、",
-      "Unity上でグリッド編集を補助するための開発支援ツールです。",
-      "タイル配置や確認作業を効率化し、シミュレーションゲーム制作を支援します。"
-    ],
+    "overview": {
+      "ja": [
+        "Manual Grid Authoring Tool は、",
+        "Unity上でグリッド編集を補助するための開発支援ツールです。",
+        "タイル配置や確認作業を効率化し、シミュレーションゲーム制作を支援します。"
+      ],
+      "en": [
+        "Manual Grid Authoring Tool is",
+        "a development tool that assists with grid editing in Unity.",
+        "It streamlines tile placement and inspection, supporting simulation game development."
+      ]
+    },
 
     "screenshots": [
       "../assets/images/Tool/MGAT/image1.png",
@@ -27,18 +37,34 @@
   },
 
   "page2": {
-    "features": [
-      "グリッド画像の読み込み・編集",
-      "タイル座標・IDの確認",
-      "タグ・色・コメントの設定",
-      "オーバーライド編集に対応",
-      "Undo / Redo に対応",
-      "編集データの保存・読み込み",
-      "編集結果を画像としてエクスポート",
-      "Unity向けグリッド制作ワークフローを支援",
-      "シミュレーションゲーム開発を効率化"
-    ],
-    "price": "980円",
+    "features": {
+      "ja": [
+        "グリッド画像の読み込み・編集",
+        "タイル座標・IDの確認",
+        "タグ・色・コメントの設定",
+        "オーバーライド編集に対応",
+        "Undo / Redo に対応",
+        "編集データの保存・読み込み",
+        "編集結果を画像としてエクスポート",
+        "Unity向けグリッド制作ワークフローを支援",
+        "シミュレーションゲーム開発を効率化"
+      ],
+      "en": [
+        "Load and edit grid images",
+        "Inspect tile coordinates and IDs",
+        "Set tags, colors, and comments",
+        "Override editing support",
+        "Undo / Redo support",
+        "Save and load edit data",
+        "Export edit results as images",
+        "Supports Unity grid authoring workflows",
+        "Streamlines simulation game development"
+      ]
+    },
+    "price": {
+      "ja": "980円",
+      "en": "980 JPY"
+    },
 
     "stores": [
       {
@@ -54,8 +80,29 @@
     "updates": [
       {
         "date": "2026-06-17",
-        "text": "v1.0 公開"
+        "text": {
+          "ja": "v1.0 公開",
+          "en": "v1.0 released"
+        }
       }
     ]
+  },
+
+  "ui": {
+    "videoHeading": { "ja": "紹介動画", "en": "Introduction Video" },
+    "videoNotReady": { "ja": "紹介動画は準備中です。", "en": "Introduction video coming soon." },
+    "featuresHeading": { "ja": "機能一覧", "en": "Features" },
+    "featuresNotReady": { "ja": "機能一覧は準備中です。", "en": "Feature list coming soon." },
+    "priceHeading": { "ja": "価格", "en": "Price" },
+    "storesHeading": { "ja": "販売サイト", "en": "Stores" },
+    "storesNotReady": { "ja": "販売サイトは準備中です。", "en": "Store links coming soon." },
+    "updatesHeading": { "ja": "更新履歴", "en": "Update History" },
+    "updatesNotReady": { "ja": "更新履歴はまだありません。", "en": "No updates yet." },
+    "prevPage": { "ja": "← 前の頁", "en": "← Previous" },
+    "nextPage": { "ja": "次の頁 →", "en": "Next →" },
+    "backToTop": { "ja": "← Greybrion Studioへ戻る", "en": "← Back to Greybrion Studio" },
+    "loadError": { "ja": "読み込みエラー", "en": "Loading Error" },
+    "loadErrorBody": { "ja": "作品情報を読み込めませんでした。", "en": "Failed to load work details." },
+    "enlargeAlt": { "ja": "拡大画像", "en": "Enlarged image" }
   }
 }
