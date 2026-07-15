@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "projectId": "website",
+  "lastUpdated": "2026-07-16",
+  "logs": [
+    {
+      "id": "website-20260716-001",
+      "date": "2026-07-16",
+      "title": {
+        "ja": "Language切り替えUI導入・Contactメニュー整理",
+        "en": "Language switcher UI and Contact menu reorganization"
+      },
+      "body": {
+        "ja": "Language切り替えUIをサイト全体へ導入。Languageドロップダウンを既存UIへ統一。Contactメニューを整理し、Blueskyの外部JSON管理へ変更。今後の多言語対応とSNS追加が容易な構成へ改善。",
+        "en": "Introduced a site-wide language switcher UI. Unified the Language dropdown with the existing navigation style. Reorganized the Contact menu and migrated Bluesky link management to external JSON. Improved architecture for future multilingual support and easy SNS additions."
+      },
+      "tags": ["ui", "localization", "language", "navigation", "bluesky", "website"],
+      "image": null
+    }
+  ]
+}

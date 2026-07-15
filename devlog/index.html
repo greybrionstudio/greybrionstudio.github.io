@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Development Log - Greybrion Studio</title>
-  <meta name="description"
+  <meta name="description" id="metaDescription"
     content="Greybrion Studioの開発ログ。ゲーム開発・ツール開発・AscenderAI開発の進捗を公開しています。">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,32 +26,43 @@
 
     <nav class="nav" id="siteNav">
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">Works</button>
+        <button class="nav-link dropdown-toggle" type="button" id="navWorks">Works</button>
         <div class="dropdown-menu">
-          <a href="../index.html#works">Games</a>
-          <a href="../index.html#works">Tools</a>
+          <a href="../index.html#works" id="navGames">Games</a>
+          <a href="../index.html#works" id="navTools">Tools</a>
         </div>
       </div>
 
       <div class="nav-item">
-        <a class="nav-link" href="../devlog/index.html">Dev Log</a>
+        <a class="nav-link" href="../devlog/index.html" id="navDevlog">Dev Log</a>
       </div>
 
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">Studio</button>
+        <button class="nav-link dropdown-toggle" type="button" id="navStudio">Studio</button>
         <div class="dropdown-menu">
-          <a href="../index.html#about">About</a>
-          <a href="../index.html#philosophy">Philosophy</a>
-          <a href="../index.html#profile">Profile</a>
+          <a href="../index.html#about" id="navAbout">About</a>
+          <a href="../index.html#philosophy" id="navPhilosophy">Philosophy</a>
+          <a href="../index.html#profile" id="navProfile">Profile</a>
         </div>
       </div>
 
       <div class="nav-item has-dropdown">
-        <button class="nav-link dropdown-toggle" type="button">Contact</button>
+        <button class="nav-link dropdown-toggle" type="button" id="navContact">Contact</button>
         <div class="dropdown-menu">
-          <a href="../index.html#contact">Contact</a>
-          <a href="../index.html#contact">X</a>
-          <a href="../index.html#contact">GitHub</a>
+          <a href="../index.html#contact" id="navContactLink">Contact</a>
+          <li id="navBlueskyItem" hidden>
+            <a id="navBlueskyLink" href="" target="_blank" rel="noopener noreferrer">
+              <span id="navBluesky">Bluesky</span>
+            </a>
+          </li>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-toggle" type="button" id="navLanguage">Language</button>
+        <div class="dropdown-menu">
+          <button type="button" class="lang-option" data-lang="ja">日本語</button>
+          <button type="button" class="lang-option" data-lang="en">English</button>
         </div>
       </div>
     </nav>
@@ -69,7 +80,7 @@
   </header>
 
   <main class="devlog-layout">
-    <h1 class="devlog-page-title">Development Log</h1>
+    <h1 class="devlog-page-title" id="devlogPageTitle">Development Log</h1>
 
     <div class="devlog-categories" id="devlogCategories"></div>
 
@@ -80,6 +91,7 @@
     <div class="devlog-log-area" id="devlogEntries"></div>
   </main>
 
+  <script src="../js/language.js"></script>
   <script src="../js/menu.js"></script>
   <script src="../js/devlog.js"></script>
 </body>

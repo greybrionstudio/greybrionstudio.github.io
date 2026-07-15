@@ -1,16 +1,97 @@
 {
   "site": {
-    "title": "Greybrion Studio",
-    "headerTitle": "Greybrion Studio",
-    "releasedHeading": "公開作品"
+    "title": {
+      "ja": "Greybrion Studio",
+      "en": "Greybrion Studio"
+    },
+    "headerTitle": {
+      "ja": "Greybrion Studio",
+      "en": "Greybrion Studio"
+    },
+    "releasedHeading": {
+      "ja": "公開作品",
+      "en": "RELEASED WORKS"
+    },
+    "description": {
+      "ja": "Greybrion Studioは、Unity向け開発ツール、AI開発支援ツール、オリジナルゲームを開発する個人開発スタジオです。『Manual Grid Authoring Tool』を公開中。",
+      "en": "Greybrion Studio is an indie development studio creating Unity tools, AI development tools, and original games. Now releasing Manual Grid Authoring Tool."
+    }
+  },
+  "nav": {
+    "works": { "ja": "Works", "en": "Works" },
+    "games": { "ja": "Games", "en": "Games" },
+    "tools": { "ja": "Tools", "en": "Tools" },
+    "devlog": { "ja": "Dev Log", "en": "Dev Log" },
+    "studio": { "ja": "Studio", "en": "Studio" },
+    "about": { "ja": "About", "en": "About" },
+    "philosophy": { "ja": "Philosophy", "en": "Philosophy" },
+    "profile": { "ja": "Profile", "en": "Profile" },
+    "contact": { "ja": "Contact", "en": "Contact" },
+    "bluesky": { "ja": "Bluesky", "en": "Bluesky" },
+    "language": { "ja": "Language", "en": "Language" },
+    "langJa": { "ja": "日本語", "en": "日本語" },
+    "langEn": { "ja": "English", "en": "English" }
+  },
+  "links": {
+    "contact": "",
+    "bluesky": "https://bsky.app/profile/greybrionstudio.bsky.social"
   },
   "paper": {
-    "title": "Greybrion Studio",
-    "subtitle": "異世界の工房のように、世界を創るスタジオ",
-    "lines": [
-      "Greybrion Studio は、",
-      "ゲーム・開発ツール・AIを制作する個人開発スタジオです。",
-      "現在は、シミュレーションゲームと社内専用の開発支援AIを開発しています。"
-    ]
+    "title": {
+      "ja": "Greybrion Studio",
+      "en": "Greybrion Studio"
+    },
+    "subtitle": {
+      "ja": "異世界の工房のように、世界を創るスタジオ",
+      "en": "A studio that crafts worlds, like a workshop in another realm"
+    },
+    "lines": {
+      "ja": [
+        "Greybrion Studio は、",
+        "ゲーム・開発ツール・AIを制作する個人開発スタジオです。",
+        "現在は、シミュレーションゲームと社内専用の開発支援AIを開発しています。"
+      ],
+      "en": [
+        "Greybrion Studio is",
+        "an indie studio creating games, development tools, and AI.",
+        "Currently developing a simulation game and an in-house AI development assistant."
+      ]
+    }
+  },
+  "sections": {
+    "philosophy": {
+      "heading": { "ja": "PHILOSOPHY", "en": "PHILOSOPHY" },
+      "body": {
+        "ja": "構造を大切にし、長く育てられるゲーム・Unity向け開発ツール・AI開発支援ツールを目指して制作しています。",
+        "en": "We value solid architecture and craft games, Unity development tools, and AI tools designed to grow over time."
+      }
+    },
+    "profile": {
+      "heading": { "ja": "PROFILE", "en": "PROFILE" },
+      "body": {
+        "ja": "Greybrion Studio は、個人で世界観と構造を積み上げていく開発スタジオです。",
+        "en": "Greybrion Studio is a solo development studio that builds worlds and systems from the ground up."
+      }
+    },
+    "contact": {
+      "heading": { "ja": "CONTACT", "en": "CONTACT" },
+      "body": {
+        "ja": "お問い合わせや今後の情報公開については、準備が整い次第こちらに追加予定です。",
+        "en": "Contact information and future announcements will be added here when ready."
+      }
+    }
+  },
+  "ui": {
+    "comingSoon": { "ja": "COMING SOON", "en": "COMING SOON" },
+    "comingSoonTitle": { "ja": "Coming Soon", "en": "Coming Soon" },
+    "comingSoonBody": {
+      "ja": "公開予定の作品は、今後ここに追加されます。",
+      "en": "Upcoming works will be added here."
+    },
+    "stayTuned": { "ja": "Stay Tuned", "en": "Stay Tuned" },
+    "workLink": { "ja": "作品紹介", "en": "Details" },
+    "menuOpen": { "ja": "メニューを開く", "en": "Open menu" },
+    "prevSlide": { "ja": "前へ", "en": "Previous" },
+    "nextSlide": { "ja": "次へ", "en": "Next" }
   }
 }

@@ -1,6 +1,13 @@
 console.log("Greybrion Studio site loaded");
 
 // =========================
+// 言語ヘルパー（language.js から取得）
+// =========================
+var getLocalized = window.GreybrionLang.getLocalized;
+var getCurrentLanguage = window.GreybrionLang.getCurrentLanguage;
+var setLanguage = window.GreybrionLang.setLanguage;
+
+// =========================
 // 要素取得
 // =========================
 const track = document.getElementById("sliderTrack");
@@ -15,7 +22,17 @@ const paperTitleEl = document.getElementById("paper-title");
 const paperSubEl = document.getElementById("paper-sub");
 const paperBodyEl = document.getElementById("paper-body");
 
+const philosophyHeadingEl = document.getElementById("philosophy-heading");
+const philosophyBodyEl = document.getElementById("philosophy-body");
+const profileHeadingEl = document.getElementById("profile-heading");
+const profileBodyEl = document.getElementById("profile-body");
+const contactHeadingEl = document.getElementById("contact-heading");
+const contactBodyEl = document.getElementById("contact-body");
+
 let currentIndex = 0;
+
+// サイトデータを保持（ナビ・UI文言用）
+let siteData = null;
 
 // =========================
 // 共通
@@ -38,6 +55,106 @@ function escapeHtml(text) {
 }
 
 // =========================
+// ナビゲーション文言更新
+// =========================
+function updateNavLabels(nav) {
+  if (!nav) return;
+
+  var items = {
+    navWorks: nav.works,
+    navGames: nav.games,
+    navTools: nav.tools,
+    navDevlog: nav.devlog,
+    navStudio: nav.studio,
+    navAbout: nav.about,
+    navPhilosophy: nav.philosophy,
+    navProfile: nav.profile,
+    navContact: nav.contact,
+    navContactLink: nav.contact,
+    navBluesky: nav.bluesky,
+    navLanguage: nav.language
+  };
+
+  Object.keys(items).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && items[id]) {
+      el.textContent = getLocalized(items[id]);
+    }
+  });
+
+  // Language選択肢のラベル更新
+  var langOptions = document.querySelectorAll(".lang-option");
+  langOptions.forEach(function (btn) {
+    var lang = btn.getAttribute("data-lang");
+    if (lang === "ja" && nav.langJa) {
+      btn.textContent = getLocalized(nav.langJa);
+    } else if (lang === "en" && nav.langEn) {
+      btn.textContent = getLocalized(nav.langEn);
+    }
+  });
+
+  // メニューボタンのaria-label更新
+  var menuToggle = document.getElementById("menuToggle");
+  if (menuToggle) {
+    var uiData = siteData && siteData.ui;
+    if (uiData && uiData.menuOpen) {
+      menuToggle.setAttribute("aria-label", getLocalized(uiData.menuOpen));
+    }
+  }
+}
+
+// =========================
+// 外部リンク設定
+// =========================
+function updateExternalLinks(links) {
+  var item = document.getElementById("navBlueskyItem");
+  var link = document.getElementById("navBlueskyLink");
+  if (!item || !link) {
+    return;
+  }
+  var url =
+    links &&
+    typeof links.bluesky === "string"
+      ? links.bluesky.trim()
+      : "";
+  var valid =
+    url.startsWith("https://") ||
+    url.startsWith("http://");
+  if (!valid) {
+    item.hidden = true;
+    link.removeAttribute("href");
+    return;
+  }
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  item.hidden = false;
+}
+
+// =========================
+// Language選択イベント設定
+// =========================
+function setupLanguageSelector() {
+  var langOptions = document.querySelectorAll(".lang-option");
+  langOptions.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = btn.getAttribute("data-lang");
+      if (lang) {
+        setLanguage(lang);
+      }
+    });
+
+    // 現在の言語にactiveクラスを付与
+    var lang = btn.getAttribute("data-lang");
+    if (lang === getCurrentLanguage()) {
+      btn.classList.add("active");
+    }
+  });
+}
+
+// =========================
 // site.json 読み込み
 // =========================
 async function loadSiteContent() {
@@ -46,39 +163,112 @@ async function loadSiteContent() {
     if (!res.ok) throw new Error(`site.json: ${res.status}`);
 
     const data = await res.json();
+    siteData = data;
+
     const site = data.site || {};
     const paper = data.paper || {};
+    const nav = data.nav || {};
+    const sections = data.sections || {};
+    const ui = data.ui || {};
 
+    // document.title
     if (site.title) {
-      document.title = site.title;
-      if (siteTitleEl) {
-        siteTitleEl.textContent = site.headerTitle || site.title;
+      document.title = getLocalized(site.title);
+    }
+
+    // meta description
+    if (site.description) {
+      var metaEl = document.getElementById("metaDescription");
+      if (metaEl) {
+        metaEl.setAttribute("content", getLocalized(site.description));
       }
     }
 
-    if (releasedHeadingEl) {
-      releasedHeadingEl.textContent = site.releasedHeading || "RELEASED WORKS";
+    // ヘッダータイトル
+    if (siteTitleEl && site.headerTitle) {
+      siteTitleEl.textContent = getLocalized(site.headerTitle);
     }
 
-    if (paperTitleEl) {
-      paperTitleEl.textContent = paper.title || "Greybrion Studio";
+    // RELEASED WORKS 見出し
+    if (releasedHeadingEl && site.releasedHeading) {
+      releasedHeadingEl.textContent = getLocalized(site.releasedHeading);
     }
 
-    if (paperSubEl) {
-      paperSubEl.textContent = paper.subtitle || "";
+    // Paper（About）セクション
+    if (paperTitleEl && paper.title) {
+      paperTitleEl.textContent = getLocalized(paper.title);
+    }
+
+    if (paperSubEl && paper.subtitle) {
+      paperSubEl.textContent = getLocalized(paper.subtitle);
     }
 
     if (paperBodyEl) {
       paperBodyEl.innerHTML = "";
 
-      if (Array.isArray(paper.lines) && paper.lines.length > 0) {
-        paper.lines.forEach((line) => {
-          const p = document.createElement("p");
+      var lines = paper.lines;
+      if (lines && typeof lines === "object" && !Array.isArray(lines)) {
+        // 多言語オブジェクト { ja: [...], en: [...] }
+        var lang = getCurrentLanguage();
+        var arr = lines[lang] || lines["ja"] || lines["en"] || [];
+        arr.forEach(function (line) {
+          var p = document.createElement("p");
           p.textContent = line;
+          paperBodyEl.appendChild(p);
+        });
+      } else if (Array.isArray(lines)) {
+        lines.forEach(function (line) {
+          var p = document.createElement("p");
+          p.textContent = getLocalized(line);
           paperBodyEl.appendChild(p);
         });
       }
     }
+
+    // PHILOSOPHY
+    if (sections.philosophy) {
+      if (philosophyHeadingEl) {
+        philosophyHeadingEl.textContent = getLocalized(sections.philosophy.heading);
+      }
+      if (philosophyBodyEl) {
+        philosophyBodyEl.textContent = getLocalized(sections.philosophy.body);
+      }
+    }
+
+    // PROFILE
+    if (sections.profile) {
+      if (profileHeadingEl) {
+        profileHeadingEl.textContent = getLocalized(sections.profile.heading);
+      }
+      if (profileBodyEl) {
+        profileBodyEl.textContent = getLocalized(sections.profile.body);
+      }
+    }
+
+    // CONTACT
+    if (sections.contact) {
+      if (contactHeadingEl) {
+        contactHeadingEl.textContent = getLocalized(sections.contact.heading);
+      }
+      if (contactBodyEl) {
+        contactBodyEl.textContent = getLocalized(sections.contact.body);
+      }
+    }
+
+    // ナビゲーション文言
+    updateNavLabels(nav);
+
+    // 外部リンク設定
+    updateExternalLinks(data.links || {});
+
+    // スライダーボタンのaria-label
+    if (prevBtn && ui.prevSlide) {
+      prevBtn.setAttribute("aria-label", getLocalized(ui.prevSlide));
+    }
+    if (nextBtn && ui.nextSlide) {
+      nextBtn.setAttribute("aria-label", getLocalized(ui.nextSlide));
+    }
+
   } catch (err) {
     console.error("site.json error:", err);
   }
@@ -96,14 +286,18 @@ function createWorkCard(work) {
     : `<div class="coming-soon-image">${escapeHtml(work.title || "Work")}</div>`;
 
   const link = work.link && work.link.trim() !== "" ? work.link : "#";
-  const linkText = link === "#" ? "Coming Soon" : "作品紹介";
+
+  var ui = (siteData && siteData.ui) || {};
+  var linkText = link === "#"
+    ? getLocalized(ui.comingSoon || "Coming Soon")
+    : getLocalized(ui.workLink || "Details");
 
   article.innerHTML = `
     ${image}
     <div class="slide-body">
       <span class="slide-type">${escapeHtml(work.type || "Work")}</span>
       <h3>${escapeHtml(work.title || "Untitled")}</h3>
-      <p>${escapeHtml(work.description || "")}</p>
+      <p>${escapeHtml(getLocalized(work.description || ""))}</p>
       <a class="work-link" href="${escapeHtml(link)}">${escapeHtml(linkText)}</a>
     </div>
   `;
@@ -115,13 +309,15 @@ function createComingSoonCard() {
   const article = document.createElement("article");
   article.className = "slide-card coming-soon-card";
 
+  var ui = (siteData && siteData.ui) || {};
+
   article.innerHTML = `
-    <div class="coming-soon-image">COMING SOON</div>
+    <div class="coming-soon-image">${escapeHtml(getLocalized(ui.comingSoon || "COMING SOON"))}</div>
     <div class="slide-body">
       <span class="slide-type">Soon</span>
-      <h3>Coming Soon</h3>
-      <p>公開予定の作品は、今後ここに追加されます。</p>
-      <a href="javascript:void(0)">Stay Tuned</a>
+      <h3>${escapeHtml(getLocalized(ui.comingSoonTitle || "Coming Soon"))}</h3>
+      <p>${escapeHtml(getLocalized(ui.comingSoonBody || ""))}</p>
+      <a href="javascript:void(0)">${escapeHtml(getLocalized(ui.stayTuned || "Stay Tuned"))}</a>
     </div>
   `;
 
@@ -325,6 +521,7 @@ function setupSliderEvents() {
 // 初期化
 // =========================
 document.addEventListener("DOMContentLoaded", async () => {
+  setupLanguageSelector();
   setupSliderEvents();
 
   await Promise.all([

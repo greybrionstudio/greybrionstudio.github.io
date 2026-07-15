@@ -128,17 +128,32 @@ html {
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
+.dropdown-menu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .nav-item.open .dropdown-menu {
   display: flex;
 }
 
-.dropdown-menu a {
+.dropdown-menu a,
+.dropdown-menu button {
   display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  background: transparent;
+  border: 0;
   color: #f5e7c8;
-  text-decoration: none;
+  font: inherit;
   font-size: 0.9rem;
   letter-spacing: 0.03em;
-  padding: 8px 10px;
+  line-height: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
   border-radius: 8px;
   transition:
     background 0.2s ease,
@@ -146,10 +161,22 @@ html {
     text-shadow 0.2s ease;
 }
 
-.dropdown-menu a:hover {
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
   background: rgba(245, 208, 138, 0.08);
   color: #f5d08a;
   text-shadow: 0 0 6px rgba(245, 208, 138, 0.25);
+}
+
+.dropdown-menu a:focus-visible,
+.dropdown-menu button:focus-visible {
+  outline: 2px solid #f5d08a;
+  outline-offset: -2px;
+}
+
+.lang-option.active {
+  color: #f5d08a;
+  background: rgba(245, 208, 138, 0.06);
 }
 
 /* ハンバーガー */
@@ -693,7 +720,8 @@ html {
     box-shadow: none;
   }
 
-  .dropdown-menu a {
+  .dropdown-menu a,
+  .dropdown-menu button {
     font-size: 0.88rem;
     padding: 8px 10px;
   }

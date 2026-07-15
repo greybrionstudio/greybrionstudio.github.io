@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "categoryId": "tool",
-  "lastUpdated": "2026-07-04",
+  "lastUpdated": "2026-07-16",
   "tabs": [
     {
       "id": "manual-grid-authoring-tool",
@@ -11,6 +11,15 @@
       },
       "image": null,
       "logFile": "tool/manual-grid-authoring-tool-devlog.json"
+    },
+    {
+      "id": "website",
+      "name": {
+        "ja": "公式サイト",
+        "en": "Official Website"
+      },
+      "image": null,
+      "logFile": "tool/website-devlog.json"
     }
   ]
 }
