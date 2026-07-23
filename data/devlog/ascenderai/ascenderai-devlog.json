@@ -4,6 +4,27 @@
   "lastUpdated": "2026-07-15",
   "logs": [
     {
+      "id": "ascenderai-20260722-001",
+      "date": "2026-07-22",
+      "title": {
+        "ja": "Specialty AI Architectureの完成",
+        "en": "Completed the Specialty AI Architecture"
+      },
+      "body": {
+        "ja": "Knowledge FoundationのRuntime検証を重ねる中で、Knowledge Structuring AIへEntity抽出・Relation生成・Knowledge生成・更新判定など多くの責務を集約した構成では、Promptが大規模化し、LLMがEvidenceよりもルールやSchemaを優先して解釈してしまうことが分かりました。SchemaSelectorによる対象Schemaの絞り込み、Prompt改善、JSON構造の見直しなど様々な対策を行いましたが、本質的な改善には至りませんでした。\n\nそこで設計を根本から見直し、1つのAIにすべてを任せる構成を廃止しました。代わりに、User・Company・Project・ParentTask・ChildTask・AI・Document・Codeなど各Entity専用のSpecialty AIへ責務を分割し、それらを共通実行基盤であるGenericCandidateBuilder、CandidateValidator、Decision Pipeline、Knowledge Repositoryへ接続する新しいアーキテクチャへ移行しました。\n\nまた、LLMの役割も根本から見直し、従来のようにEntity全体を生成させる構成を廃止しました。LLMの責務はEvidenceから必要な値（Values）の抽出のみに限定し、抽出された値をプログラム側で共通テンプレートへ組み立て、Validation・Decision・Persistenceまでを一貫した共通処理で実行する構成へ変更しています。これにより、LLMの出力を最小限に抑えながら、Entity構造や保存処理の一貫性をコード側で保証できるようになりました。\n\nこの変更により、すべてのSpecialty AIは共通Runtime上で動作できるようになり、Promptの小型化、品質の安定化、保守性・拡張性の向上を実現しました。また、新しいSpecialty AIを追加する場合でも、PromptとEntity定義を追加するだけで共通実行基盤へ組み込めるようになりました。\n\nKnowledge Foundationは、単一AIへ多くの責務を集中させる構成から、LLMとプログラムの責務を明確に分離した専門AIアーキテクチャへ進化しました。LLMはEvidenceから必要な値（Values）の抽出に専念し、抽出された値を共通テンプレートへ組み立てる処理、検証、判定、保存は共通実行基盤が担うことで、LLMの確率的な出力に依存しない再現性の高いRuntimeを実現しています。また、すべてのSpecialty AIは同じ実行基盤を共有しているため、新しい専門AIを追加する場合でも、PromptとEntity定義を追加するだけで共通Runtimeへ組み込める拡張性の高い構成となりました。これにより、本アーキテクチャはKnowledge OSの中核となる知識基盤として、継続的な機能追加や将来的な発展にも柔軟に対応できる構成へ進化しました。",
+        "en": "During repeated runtime verification of the Knowledge Foundation, it became clear that concentrating entity extraction, relation generation, knowledge generation, and update decisions into a single Knowledge Structuring AI caused the prompt to become excessively large. As a result, the LLM increasingly prioritized rules and database schemas over the actual evidence. Various improvements, including schema filtering with SchemaSelector, prompt refinements, and JSON structure redesign, were introduced, but they did not fundamentally solve the problem.\n\nTo address this, the architecture was redesigned from the ground up. The monolithic AI was replaced with specialized AIs dedicated to individual entity domains such as User, Company, Project, ParentTask, ChildTask, AI, Document, and Code. These specialized AIs are connected through a shared execution pipeline consisting of the GenericCandidateBuilder, CandidateValidator, Decision Pipeline, and Knowledge Repository.\n\nThe role of the LLM was fundamentally redefined. Instead of generating complete entities, its responsibility is now limited to extracting values from evidence. Those extracted values are assembled into common templates by the application, while validation, decision making, and persistence are handled through a deterministic shared runtime. This approach minimizes probabilistic output from the LLM while allowing the application to guarantee consistent entity structures and persistence behavior.\n\nAs a result, every Specialty AI now runs on the same shared runtime, significantly reducing prompt size while improving stability, maintainability, and scalability. New specialties can now be added by providing only a prompt and entity definition.\n\nThe Knowledge Foundation has evolved from a monolithic AI architecture into a specialized AI architecture with a clear separation of responsibilities between the LLM and the application. The LLM is dedicated to extracting values from evidence, while the shared runtime assembles those values into common templates and performs validation, decision making, and persistence. This architecture provides a highly reproducible runtime that is no longer dependent on probabilistic LLM outputs. Because every Specialty AI shares the same execution foundation, new AI domains can be integrated simply by adding a prompt and an entity definition. As a result, the architecture has evolved into the extensible knowledge foundation at the core of the Knowledge OS, designed to support continuous feature expansion and future growth with high maintainability and scalability."
+      },
+      "image": null,
+      "tags": [
+        "knowledge",
+        "architecture",
+        "specialty",
+        "llm",
+        "runtime",
+        "foundation"
+      ]
+    },
+    {
       "id": "ascenderai-20260715-001",
       "date": "2026-07-15",
       "title": {
