@@ -79,6 +79,13 @@
 
     "updates": [
       {
+        "date": "2026-07-30",
+        "text": {
+          "ja": "期間限定無料公開",
+          "en": "Limited-time free release"
+        }
+      },
+      {
         "date": "2026-06-17",
         "text": {
           "ja": "v1.0 公開",
