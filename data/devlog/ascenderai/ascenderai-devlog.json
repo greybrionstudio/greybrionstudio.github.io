@@ -1,8 +1,128 @@
 {
   "version": "1.0",
   "projectId": "ascenderai",
-  "lastUpdated": "2026-07-15",
+  "lastUpdated": "2026-08-16",
   "logs": [
+    {
+      "id": "ascenderai-20260816-001",
+      "date": "2026-08-16",
+      "title": {
+        "ja": "AI処理のレビュー・可視化機能を追加",
+        "en": "Added AI Processing Review and Observability"
+      },
+      "body": {
+        "ja": "AIの処理結果を自動的に検証・レビューし、その状態を画面上から確認できる仕組みを追加しました。\n\nレビュー対象は必要に応じて切り替えられるようにし、処理中の状態や検証結果もリアルタイムで確認できるようにしています。これにより、人間が直接確認しにくいAI内部の処理についても、品質や状態を把握しながら開発を進めやすくなりました。\n\n今回の改善により、AscenderAIは単にAIの回答を表示するだけでなく、処理の流れや結果を確認しながら改善できる開発環境へ一歩進みました。",
+        "en": "Added a system for automatically validating and reviewing AI processing results, with review status visible directly in the interface.\n\nReview targets can be enabled or disabled as needed, while processing status and validation results can also be observed in real time. This makes it easier to develop and improve AI behavior even in areas that are difficult for people to inspect directly.\n\nWith this update, AscenderAI has moved beyond simply displaying AI responses toward an environment where developers can observe, verify, and improve how AI processing behaves."
+      },
+      "image": null,
+      "tags": [
+        "ai",
+        "review",
+        "ui",
+        "observability",
+        "quality"
+      ]
+    },
+    {
+      "id": "ascenderai-20260811-001",
+      "date": "2026-08-11",
+      "title": {
+        "ja": "AI実行状態の自動検証基盤を追加",
+        "en": "Added Automated Validation for AI Runtime State"
+      },
+      "body": {
+        "ja": "AIの処理が完了したかどうかだけでなく、その実行状態を自動的に検証する基盤を追加しました。\n\n処理中に記録された情報をもとに、実行が正常だったのか、問題があったのか、判断に十分な情報がないのかを機械的に判定できるようにしています。これにより、AIの挙動を人手だけで確認する必要が減り、後続のレビューや品質改善へつなげやすくなりました。\n\nAscenderAIの内部処理をより客観的に確認できるようになったことで、今後の自動レビューやデバッグ機能の土台が整いました。",
+        "en": "Added an automated validation foundation that checks not only whether AI processing finished, but also whether the runtime state was healthy and verifiable.\n\nUsing information recorded during execution, the system can determine whether processing completed normally, whether a problem occurred, or whether there is not enough evidence to reach a reliable conclusion. This reduces the need for purely manual inspection and provides a stronger basis for later review and quality improvement.\n\nBy making internal AI execution more objectively verifiable, this update established the foundation for future automated review and debugging capabilities."
+      },
+      "image": null,
+      "tags": [
+        "ai",
+        "validation",
+        "runtime",
+        "quality",
+        "foundation"
+      ]
+    },
+    {
+      "id": "ascenderai-20260808-001",
+      "date": "2026-08-08",
+      "title": {
+        "ja": "AI処理の実行履歴を追跡できる基盤を追加",
+        "en": "Added Runtime Traceability for AI Processing"
+      },
+      "body": {
+        "ja": "AIの処理結果だけでなく、処理の途中で何が起きたのかを追跡できる実行履歴基盤を追加しました。\n\n各処理を関連付けながら記録できるようにすることで、問題が発生した際に、どの処理段階で何が起きたのかを後から確認しやすくなりました。これにより、デバッグや品質検証のための根拠を残せるようになっています。\n\nこの実行履歴は、後続の自動検証やAIレビューにも利用できるため、AscenderAIの品質管理を支える基盤の一つとなります。",
+        "en": "Added a runtime traceability foundation that records not only final AI results, but also what happened during processing.\n\nBy keeping related execution steps connected, it is easier to investigate where and how a problem occurred when something goes wrong. This provides a clearer evidence trail for debugging and quality verification.\n\nBecause the recorded execution history can also be used by later validation and review processes, it now serves as one of the foundations for AscenderAI's broader quality-control workflow."
+      },
+      "image": null,
+      "tags": [
+        "runtime",
+        "traceability",
+        "debug",
+        "quality",
+        "foundation"
+      ]
+    },
+    {
+      "id": "ascenderai-20260807-001",
+      "date": "2026-08-07",
+      "title": {
+        "ja": "AIとHumanで共通利用できる会話送信基盤を整備",
+        "en": "Unified Conversation Sending for AI and Human Inputs"
+      },
+      "body": {
+        "ja": "Humanからのチャット送信と、AIからの会話送信を共通の処理経路へ統合するための基盤を整備しました。\n\nこれまではUI操作を前提とした処理が中心でしたが、送信処理を共通化することで、将来的にAIやその他の入力元からも同じConversation Runtimeを利用できる構成へ移行しています。\n\nこの変更により、HumanとAIで別々の会話処理を持つのではなく、共通の会話基盤を利用しながら、それぞれに必要な前後処理だけを追加できる拡張性の高い構成になりました。",
+        "en": "Established a unified conversation-sending foundation so that both human chat input and AI-originated messages can use the same processing path.\n\nPreviously, the flow was centered primarily around UI-driven interaction. By unifying the send path, AscenderAI can now evolve toward a structure where AI and other future input sources can use the same Conversation Runtime.\n\nThis avoids maintaining separate conversation engines for humans and AI, while still allowing each source to add its own required processing around a shared conversation foundation."
+      },
+      "image": null,
+      "tags": [
+        "conversation",
+        "ai",
+        "human",
+        "runtime",
+        "architecture"
+      ]
+    },
+    {
+      "id": "ascenderai-20260806-001",
+      "date": "2026-08-06",
+      "title": {
+        "ja": "長文・複合入力に対応する解析基盤を強化",
+        "en": "Strengthened Input Analysis for Long and Mixed Content"
+      },
+      "body": {
+        "ja": "自然文、コード、構造化データなどが混在する長い入力を、より効率的に扱うための入力解析基盤を強化しました。\n\n入力全体を一律に重く解析するのではなく、まず軽量に特徴や境界の候補を観測し、必要な部分だけを詳しく解析する段階的な方式へ移行しています。これにより、長文入力でも処理負荷を抑えながら、内容の構造を捉えやすくなりました。\n\n今後のChunk分割、Tag / Keyword抽出、RoutingなどへつながるInput Foundationの中核として、複雑な入力を扱うための土台を整えています。",
+        "en": "Strengthened the input analysis foundation for handling long content that mixes natural language, code, and structured data.\n\nInstead of applying heavy analysis uniformly across the entire input, the system now follows a staged approach: first observing lightweight signals and possible boundaries, then applying deeper analysis only where needed. This makes it easier to understand the structure of long inputs while keeping processing overhead under control.\n\nThe new approach forms the core of the Input Foundation and provides the basis for future chunking, tag and keyword extraction, routing, and other structured input processing."
+      },
+      "image": null,
+      "tags": [
+        "input",
+        "analysis",
+        "long-context",
+        "foundation",
+        "architecture"
+      ]
+    },
+    {
+      "id": "ascenderai-20260802-001",
+      "date": "2026-08-02",
+      "title": {
+        "ja": "Specialty AI ArchitectureのRuntime統合を完了",
+        "en": "Completed Runtime Integration for the Specialty AI Architecture"
+      },
+      "body": {
+        "ja": "Specialty AI Architectureを実際の会話処理へ統合し、会話後の知識整理・保存までを一連の流れとして動作させられるようにしました。\n\nこれにより、専門領域ごとに役割を分けたAIが共通の実行基盤上で動作し、会話から得られた情報を継続的に知識として活用できる状態になりました。\n\n設計として完成していたSpecialty AI Architectureが実際のRuntimeへ接続されたことで、Knowledge Foundationは実運用に近い形で動作する段階へ進みました。",
+        "en": "Integrated the Specialty AI Architecture into the live conversation flow so that knowledge organization and persistence can run as part of the end-to-end runtime after a conversation.\n\nSpecialized AIs can now operate on a shared execution foundation and continuously turn information from conversations into reusable knowledge.\n\nWith the architecture now connected to the actual runtime, the Knowledge Foundation has moved from an architectural design into a more operational stage of the system."
+      },
+      "image": null,
+      "tags": [
+        "knowledge",
+        "specialty",
+        "runtime",
+        "foundation",
+        "architecture"
+      ]
+    },
     {
       "id": "ascenderai-20260722-001",
       "date": "2026-07-22",
@@ -112,8 +232,7 @@
         "en": "Unified the AI Execution Foundation"
       },
       "body": {
-        "ja": "複数のAIで個別に管理されていたPrompt生成、LLM実行、Response解析、Retry処理をAIExecutionManagerへ統合しました。ConversationAnalysisAI、ConversationContextAI、ConversationAI、ConversationResponseAnalysisAIを共通実行基盤へ移行し、AI機能の追加や保守を行いやすい構成へ改善しました。従来は各AIがそれぞれ実行処理を持っていたため、機能追加や修正のたびに同様の処理を複数箇所で実装・保守する必要がありました。AIExecutionManagerへ責務を集約したことで、各AIは本来の役割に専念できるようになり、AIの追加・保守・拡張を効率的に行えるアーキテクチャへ進化しました。"
-        ,
+        "ja": "複数のAIで個別に管理されていたPrompt生成、LLM実行、Response解析、Retry処理をAIExecutionManagerへ統合しました。ConversationAnalysisAI、ConversationContextAI、ConversationAI、ConversationResponseAnalysisAIを共通実行基盤へ移行し、AI機能の追加や保守を行いやすい構成へ改善しました。従来は各AIがそれぞれ実行処理を持っていたため、機能追加や修正のたびに同様の処理を複数箇所で実装・保守する必要がありました。AIExecutionManagerへ責務を集約したことで、各AIは本来の役割に専念できるようになり、AIの追加・保守・拡張を効率的に行えるアーキテクチャへ進化しました。",
         "en": "Unified prompt generation, LLM execution, response parsing, and retry handling under AIExecutionManager. Migrated ConversationAnalysisAI, ConversationContextAI, ConversationAI, and ConversationResponseAnalysisAI to the shared execution foundation, improving maintainability and simplifying future AI integrations. Previously, each AI implemented its own execution flow, requiring duplicated logic whenever new features or improvements were introduced. By centralizing these responsibilities within AIExecutionManager, each AI can now focus solely on its domain, significantly improving maintainability, extensibility, and long-term scalability."
       },
       "image": null,
