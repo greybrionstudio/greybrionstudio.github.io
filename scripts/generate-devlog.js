@@ -256,6 +256,7 @@ function buildDetailPage(opts) {
   var lang       = opts.lang;        // "ja" | "en"
   var log        = opts.log;
   var catName    = opts.catName;
+  var tabName    = opts.tabName || null;   // タブ名（ツール開発/Unity等）
   var jaUrl      = opts.jaUrl;
   var enUrl      = opts.enUrl;
 
@@ -279,6 +280,8 @@ function buildDetailPage(opts) {
   var dateStr     = escapeHtml(log.date || "");
   var h1Text      = escapeHtml(titleText);
   var catDisplay  = escapeHtml(catName);
+  // タブ名があればパンくずに追加（例: ツール開発 › Manual Grid Authoring Tool）
+  var tabDisplay  = tabName ? escapeHtml(tabName) : "";
   var backLabel   = isJa ? "← Dev Log 一覧へ" : "← Back to Dev Log";
   var altLangLabel = isJa ? "English" : "日本語";
   var altLangUrl  = isJa ? enUrl : jaUrl;
@@ -413,6 +416,10 @@ jsonLd + "\n" +
 '      <a href="' + BASE_URL + '/devlog/index.html">Dev Log</a>\n' +
 "      <span aria-hidden=\"true\">›</span>\n" +
 '      <span>' + catDisplay + "</span>\n" +
+(tabDisplay
+  ? "      <span aria-hidden=\"true\">›</span>\n" +
+    '      <span>' + tabDisplay + "</span>\n"
+  : "") +
 "    </nav>\n" +
 "\n" +
 "    <article class=\"dls-article\">\n" +
@@ -439,7 +446,270 @@ jsonLd + "\n" +
   );
 }
 
-// ─── sitemap 更新 ─────────────────────────────────────────────────────────────
+// ─── Archive ページ生成 ───────────────────────────────────────────────────────
+
+/**
+ * カテゴリ構造を保持した索引データを構築する。
+ * allEntries を categories.json の順序で整理し直す。
+ * 各カテゴリ内は日付降順。
+ */
+function buildArchiveIndex(allEntries) {
+  // カテゴリ → タブ → ログ の順序を categories.json の順で再現
+  var catData = readJson(CATEGORY_JSON);
+  if (!catData) return [];
+
+  var result = []; // [{ catName, tabs: [{ tabName, logs: [...] }] }]
+
+  catData.categories.forEach(function (cat) {
+    var catNameJa = (cat.name && cat.name.ja) || cat.id || "Unknown";
+    var catNameEn = (cat.name && cat.name.en) || catNameJa;
+
+    var tabs = [];
+
+    if (cat.hasTabs) {
+      var tabsPath = path.join(DATA_ROOT, cat.tabsFile);
+      var tabsData = readJson(tabsPath);
+      if (!tabsData || !Array.isArray(tabsData.tabs)) return;
+
+      tabsData.tabs.forEach(function (tab) {
+        var tabNameJa = (tab.name && tab.name.ja) || tab.id || "Unknown";
+        var tabNameEn = (tab.name && tab.name.en) || tabNameJa;
+        // allEntries からこのタブのログを抽出（tabName が一致するもの）
+        var tabLogs = allEntries
+          .filter(function (e) { return e.tabName === tabNameJa; })
+          .sort(function (a, b) {
+            return (b.log.date || "").localeCompare(a.log.date || "");
+          });
+        tabs.push({ tabNameJa: tabNameJa, tabNameEn: tabNameEn, logs: tabLogs });
+      });
+
+    } else {
+      // タブなし → カテゴリ直下のログ
+      var directLogs = allEntries
+        .filter(function (e) { return e.categoryName === catNameJa && !e.tabName; })
+        .sort(function (a, b) {
+          return (b.log.date || "").localeCompare(a.log.date || "");
+        });
+      // タブなしカテゴリは tabName=null のまま1タブとして表現
+      tabs.push({ tabNameJa: null, tabNameEn: null, logs: directLogs });
+    }
+
+    result.push({
+      catNameJa: catNameJa,
+      catNameEn: catNameEn,
+      tabs: tabs
+    });
+  });
+
+  return result;
+}
+
+/**
+ * archive.html の HTML 文字列を生成する。
+ */
+function buildArchivePage(archiveIndex) {
+  var archiveUrl    = BASE_URL + "/devlog/archive.html";
+  var indexUrl      = BASE_URL + "/devlog/index.html";
+  var pageDesc      = "Greybrion Studio Development Log の全ログ索引。" +
+                      "AscenderAI・ゲーム開発・ツール開発のすべてのログに直接アクセスできます。";
+  var pageDescEn    = "Full archive of Greybrion Studio Development Log. " +
+                      "Access all logs for AscenderAI, game development, and tool development.";
+
+  // カテゴリ別セクション HTML を構築
+  var sectionsHtml = "";
+  var totalLogs    = 0;
+
+  archiveIndex.forEach(function (cat) {
+    var catSection = "";
+
+    cat.tabs.forEach(function (tab) {
+      if (!tab.logs.length) return;
+
+      var listItems = "";
+      tab.logs.forEach(function (entry) {
+        var log    = entry.log;
+        var id     = log.id;
+        var date   = escapeHtml(log.date || "");
+        var titleJa = escapeHtml((log.title && log.title.ja) || "");
+        var titleEn = escapeHtml((log.title && log.title.en) || titleJa);
+        var jaHref  = "log/ja/" + id + ".html";
+        var enHref  = "log/en/" + id + ".html";
+
+        // タグ（任意表示）
+        var tagsStr = "";
+        if (Array.isArray(log.tags) && log.tags.length > 0) {
+          tagsStr = log.tags.map(function (t) {
+            return '<span class="dla-tag">' + escapeHtml(t) + "</span>";
+          }).join(" ");
+        }
+
+        listItems +=
+          "        <li class=\"dla-item\">\n" +
+          "          <time class=\"dla-date\" datetime=\"" + escapeAttr(log.date || "") + "\">" + date + "</time>\n" +
+          "          <div class=\"dla-links\">\n" +
+          "            <a class=\"dla-link-ja\" href=\"" + escapeAttr(jaHref) + "\">" + titleJa + "</a>\n" +
+          "            <a class=\"dla-link-en\" href=\"" + escapeAttr(enHref) + "\" lang=\"en\" hreflang=\"en\">English</a>\n" +
+          "          </div>\n" +
+          (tagsStr ? "          <div class=\"dla-tags\">" + tagsStr + "</div>\n" : "") +
+          "        </li>\n";
+
+        totalLogs++;
+      });
+
+      if (tab.tabNameJa) {
+        catSection +=
+          "      <section class=\"dla-tab-section\">\n" +
+          "        <h3 class=\"dla-tab-name\">" + escapeHtml(tab.tabNameJa) + "</h3>\n" +
+          "        <ul class=\"dla-list\">\n" +
+          listItems +
+          "        </ul>\n" +
+          "      </section>\n";
+      } else {
+        catSection +=
+          "      <ul class=\"dla-list\">\n" +
+          listItems +
+          "      </ul>\n";
+      }
+    });
+
+    if (!catSection) return;
+
+    sectionsHtml +=
+      "    <section class=\"dla-category-section\">\n" +
+      "      <h2 class=\"dla-category-name\">" + escapeHtml(cat.catNameJa) + "</h2>\n" +
+      catSection +
+      "    </section>\n\n";
+  });
+
+  // JSON-LD ItemList
+  var itemListElements = [];
+  var pos = 1;
+  archiveIndex.forEach(function (cat) {
+    cat.tabs.forEach(function (tab) {
+      tab.logs.forEach(function (entry) {
+        var log = entry.log;
+        itemListElements.push({
+          "@type": "ListItem",
+          "position": pos++,
+          "url": BASE_URL + "/devlog/log/ja/" + log.id + ".html",
+          "name": (log.title && log.title.ja) || log.id
+        });
+      });
+    });
+  });
+
+  var jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Development Log Archive — Greybrion Studio",
+    "description": pageDesc,
+    "url": archiveUrl,
+    "isPartOf": {
+      "@type": "Blog",
+      "url": indexUrl,
+      "name": "Greybrion Studio Development Log"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": ORG.name,
+      "url": ORG.url
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": itemListElements.length,
+      "itemListElement": itemListElements
+    }
+  }, null, 2);
+
+  return (
+"<!--\n" +
+"  Generated from Dev Log JSON.\n" +
+"  Do not edit this file manually.\n" +
+"  Source: data/devlog/**/*.json\n" +
+"  Regenerate: node scripts/generate-devlog.js\n" +
+"-->\n" +
+"<!DOCTYPE html>\n" +
+'<html lang="ja">\n' +
+"<head>\n" +
+'  <meta charset="UTF-8">\n' +
+'  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+'  <title>Development Log Archive | Greybrion Studio</title>\n' +
+'  <meta name="description" content="' + escapeAttr(pageDesc) + '">\n' +
+"\n" +
+"  <!-- canonical -->\n" +
+'  <link rel="canonical" href="' + escapeAttr(archiveUrl) + '">\n' +
+"\n" +
+"  <!-- Open Graph -->\n" +
+'  <meta property="og:type"        content="website">\n' +
+'  <meta property="og:title"       content="Development Log Archive | Greybrion Studio">\n' +
+'  <meta property="og:description" content="' + escapeAttr(pageDesc) + '">\n' +
+'  <meta property="og:url"         content="' + escapeAttr(archiveUrl) + '">\n' +
+'  <meta property="og:site_name"   content="Greybrion Studio">\n' +
+'  <meta property="og:locale"      content="ja_JP">\n' +
+"\n" +
+"  <!-- JSON-LD -->\n" +
+'  <script type="application/ld+json">\n' +
+jsonLd + "\n" +
+"  </script>\n" +
+"\n" +
+"  <!-- Fonts -->\n" +
+'  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+'  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+'  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">\n' +
+"\n" +
+'  <link rel="icon" href="' + BASE_URL + '/favicon.ico" type="image/x-icon">\n' +
+'  <link rel="stylesheet" href="' + BASE_URL + '/css/style.css">\n' +
+'  <link rel="stylesheet" href="' + BASE_URL + '/css/devlog-static.css">\n' +
+"</head>\n" +
+"<body class=\"dls-body\">\n" +
+"\n" +
+"  <header class=\"dls-header\">\n" +
+'    <a class="dls-site-title" href="' + BASE_URL + '/">Greybrion Studio</a>\n' +
+"    <nav class=\"dls-header-nav\" aria-label=\"site navigation\">\n" +
+'      <a href="' + BASE_URL + '/devlog/index.html">Dev Log</a>\n' +
+'      <a href="' + BASE_URL + '/works/manual-grid-authoring-tool.html">Works</a>\n' +
+"    </nav>\n" +
+"  </header>\n" +
+"\n" +
+"  <main class=\"dls-main\">\n" +
+"\n" +
+"    <nav class=\"dls-breadcrumb\" aria-label=\"breadcrumb\">\n" +
+'      <a href="' + BASE_URL + '/devlog/index.html">Dev Log</a>\n' +
+"      <span aria-hidden=\"true\">›</span>\n" +
+"      <span>Archive</span>\n" +
+"    </nav>\n" +
+"\n" +
+"    <section class=\"dla-archive\">\n" +
+"      <h1 class=\"dla-heading\">Development Log Archive</h1>\n" +
+'      <p class="dla-desc">全 ' + totalLogs + ' 件のDev Logを掲載しています。' +
+         'タイトルをクリックすると詳細ページを読めます。</p>\n' +
+"\n" +
+sectionsHtml +
+"    </section>\n" +
+"\n" +
+"    <nav class=\"dls-page-nav\" aria-label=\"page navigation\">\n" +
+'      <a class="dls-back-link" href="' + BASE_URL + '/devlog/index.html">← Dev Log 一覧へ</a>\n' +
+"    </nav>\n" +
+"\n" +
+"  </main>\n" +
+"\n" +
+"</body>\n" +
+"</html>\n"
+  );
+}
+
+/**
+ * archive.html を生成して書き出す。
+ * 戻り値: { filePath, totalLogs }
+ */
+function generateArchive(allEntries) {
+  var archiveIndex = buildArchiveIndex(allEntries);
+  var html         = buildArchivePage(archiveIndex);
+  var filePath     = path.join(ROOT, "devlog", "archive.html");
+  return { filePath: filePath, content: html, archiveIndex: archiveIndex };
+}
+
+
 
 /**
  * 既存 sitemap.xml を読んで非 DevLog エントリを保持し、
@@ -474,6 +744,16 @@ function updateSitemap(allLogs) {
     (latestDate ? "\n    <lastmod>" + latestDate + "</lastmod>" : "") +
     "\n    <changefreq>" + config.SITEMAP.devlogIndex.changefreq + "</changefreq>" +
     "\n    <priority>"   + config.SITEMAP.devlogIndex.priority   + "</priority>" +
+    "\n  </url>"
+  );
+
+  // devlog/archive.html エントリ
+  devlogBlocks.push(
+    "\n  <url>" +
+    "\n    <loc>" + BASE_URL + "/devlog/archive.html</loc>" +
+    (latestDate ? "\n    <lastmod>" + latestDate + "</lastmod>" : "") +
+    "\n    <changefreq>" + config.SITEMAP.devlogIndex.changefreq + "</changefreq>" +
+    "\n    <priority>0.7</priority>" +
     "\n  </url>"
   );
 
@@ -554,17 +834,18 @@ function main() {
     var jaUrl   = BASE_URL + "/devlog/log/ja/" + id + ".html";
     var enUrl   = BASE_URL + "/devlog/log/en/" + id + ".html";
     var catName = entry.categoryName;
+    var tabName = entry.tabName || null;
 
     // 日本語
     var jaHtml = buildDetailPage({
-      lang: "ja", log: log, catName: catName, jaUrl: jaUrl, enUrl: enUrl
+      lang: "ja", log: log, catName: catName, tabName: tabName, jaUrl: jaUrl, enUrl: enUrl
     });
     htmlBuffer.push({ filePath: path.join(OUTPUT_JA, id + ".html"), content: jaHtml });
     generatedJa.push(id);
 
     // 英語
     var enHtml = buildDetailPage({
-      lang: "en", log: log, catName: catName, jaUrl: jaUrl, enUrl: enUrl
+      lang: "en", log: log, catName: catName, tabName: tabName, jaUrl: jaUrl, enUrl: enUrl
     });
     htmlBuffer.push({ filePath: path.join(OUTPUT_EN, id + ".html"), content: enHtml });
     generatedEn.push(id);
@@ -577,7 +858,16 @@ function main() {
   console.log("  ja: " + generatedJa.length + " files");
   console.log("  en: " + generatedEn.length + " files\n");
 
-  // 5. sitemap 更新
+  // 5. Archive 索引ページ生成
+  console.log("Generating archive.html...");
+  var archiveResult = generateArchive(allEntries);
+  htmlBuffer.push({ filePath: archiveResult.filePath, content: archiveResult.content });
+  fs.writeFileSync(archiveResult.filePath, archiveResult.content, "utf8");
+  // archive 内の総ログ数をカウント
+  var archiveTotalLogs = allEntries.length;
+  console.log("  archive.html: " + archiveTotalLogs + " logs indexed\n");
+
+  // 6. sitemap 更新
   console.log("Updating sitemap.xml...");
   var addedCount = updateSitemap(allEntries);
   console.log("  Added " + addedCount + " DevLog entries to sitemap.\n");
@@ -594,6 +884,7 @@ function main() {
   console.log("  Logs loaded       : " + allEntries.length);
   console.log("  JA pages generated: " + generatedJa.length);
   console.log("  EN pages generated: " + generatedEn.length);
+  console.log("  Archive logs      : " + archiveTotalLogs);
   console.log("  Warnings          : " + warnings.length);
   console.log("  Errors            : 0");
   console.log("\nDone.");
