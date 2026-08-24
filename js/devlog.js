@@ -23,32 +23,42 @@
   var SITE_JSON = SITE_ROOT + "data/site.json";
 
   // =========================
-  // UI文言（フォールバック用）
+  // ページング定数・状態
+  // =========================
+  var LOGS_PER_PAGE = 5;
+  var currentLogPage = 1;
+  var currentLogs = [];
+
+  // =========================
+  // UI文言
   // =========================
   var UI_STRINGS = {
-    emptyLog: { ja: "ログはまだありません。", en: "No logs yet." },
-    pageTitle: { ja: "Development Log", en: "Development Log" },
+    emptyLog:        { ja: "ログはまだありません。", en: "No logs yet." },
+    pageTitle:       { ja: "Development Log",       en: "Development Log" },
     metaDescription: {
       ja: "Greybrion Studioの開発ログ。ゲーム開発・ツール開発・AscenderAI開発の進捗を公開しています。",
       en: "Development log for Greybrion Studio. Updates on game development, tool development, and AscenderAI."
-    }
+    },
+    paginationPrev:  { ja: "← 前の頁", en: "← Previous" },
+    paginationNext:  { ja: "次の頁 →", en: "Next →"      }
   };
 
   // =========================
   // DOM要素
   // =========================
   var categoryContainer = null;
-  var subtabContainer = null;
-  var logContainer = null;
-  var categoryTitle = null;
-  var pageTitleEl = null;
+  var subtabContainer   = null;
+  var logContainer      = null;
+  var paginationContainer = null;
+  var categoryTitle     = null;
+  var pageTitleEl       = null;
 
   // =========================
   // 状態
   // =========================
-  var categories = [];
+  var categories    = [];
   var activeCategory = null;
-  var activeTabs = [];
+  var activeTabs    = [];
   var activeTabIndex = 0;
 
   // サイトデータ（ナビ文言用）
@@ -70,18 +80,18 @@
     if (!nav) return;
 
     var items = {
-      navWorks: nav.works,
-      navGames: nav.games,
-      navTools: nav.tools,
-      navDevlog: nav.devlog,
-      navStudio: nav.studio,
-      navAbout: nav.about,
-      navPhilosophy: nav.philosophy,
-      navProfile: nav.profile,
-      navContact: nav.contact,
+      navWorks:       nav.works,
+      navGames:       nav.games,
+      navTools:       nav.tools,
+      navDevlog:      nav.devlog,
+      navStudio:      nav.studio,
+      navAbout:       nav.about,
+      navPhilosophy:  nav.philosophy,
+      navProfile:     nav.profile,
+      navContact:     nav.contact,
       navContactLink: nav.contact,
-      navBluesky: nav.bluesky,
-      navLanguage: nav.language
+      navBluesky:     nav.bluesky,
+      navLanguage:    nav.language
     };
 
     Object.keys(items).forEach(function (id) {
@@ -119,13 +129,10 @@
       return;
     }
     var url =
-      links &&
-      typeof links.bluesky === "string"
+      links && typeof links.bluesky === "string"
         ? links.bluesky.trim()
         : "";
-    var valid =
-      url.startsWith("https://") ||
-      url.startsWith("http://");
+    var valid = url.startsWith("https://") || url.startsWith("http://");
     if (!valid) {
       item.hidden = true;
       link.removeAttribute("href");
@@ -152,7 +159,6 @@
         }
       });
 
-      // 現在の言語にactiveクラスを付与
       var lang = btn.getAttribute("data-lang");
       if (lang === getCurrentLanguage()) {
         btn.classList.add("active");
@@ -168,8 +174,7 @@
       var res = await fetch(SITE_JSON, { cache: "no-store" });
       if (!res.ok) return;
       siteNavData = await res.json();
-      var nav = siteNavData.nav || {};
-      updateNavLabels(nav);
+      updateNavLabels(siteNavData.nav || {});
       updateExternalLinks(siteNavData.links || {});
     } catch (err) {
       console.error("site.json (nav) error:", err);
@@ -220,9 +225,10 @@
   // カテゴリ選択
   // =========================
   async function selectCategory(index) {
-    activeCategory = categories[index];
-    activeTabIndex = 0;
-    activeTabs = [];
+    activeCategory  = categories[index];
+    activeTabIndex  = 0;
+    activeTabs      = [];
+    currentLogPage  = 1;   // ← カテゴリ変更時は必ず1ページ目へ
 
     renderCategories();
 
@@ -240,7 +246,7 @@
         await selectTab(0);
       } else {
         renderSubtabs();
-        renderLogs([]);
+        setLogsAndRender([]);
       }
     } else {
       subtabContainer.innerHTML = "";
@@ -249,11 +255,9 @@
       var logPath = DEVLOG_ROOT + activeCategory.logFile;
       var logData = await fetchJson(logPath);
 
-      if (logData && Array.isArray(logData.logs)) {
-        renderLogs(logData.logs);
-      } else {
-        renderLogs([]);
-      }
+      setLogsAndRender(
+        logData && Array.isArray(logData.logs) ? logData.logs : []
+      );
     }
   }
 
@@ -296,41 +300,66 @@
   // =========================
   async function selectTab(index) {
     activeTabIndex = index;
+    currentLogPage = 1;   // ← タブ変更時は必ず1ページ目へ
     renderSubtabs();
 
     var tab = activeTabs[index];
     if (!tab) {
-      renderLogs([]);
+      setLogsAndRender([]);
       return;
     }
 
     var logPath = DEVLOG_ROOT + tab.logFile;
     var logData = await fetchJson(logPath);
 
-    if (logData && Array.isArray(logData.logs)) {
-      renderLogs(logData.logs);
-    } else {
-      renderLogs([]);
-    }
+    setLogsAndRender(
+      logData && Array.isArray(logData.logs) ? logData.logs : []
+    );
   }
 
   // =========================
-  // ログ一覧生成（日付降順）
+  // ログをソートして保持し、現ページを描画
   // =========================
-  function renderLogs(logs) {
+  function setLogsAndRender(logs) {
+    // 日付降順でソートして保持
+    currentLogs = Array.isArray(logs)
+      ? logs.slice().sort(function (a, b) {
+          return (b.date || "").localeCompare(a.date || "");
+        })
+      : [];
+
+    renderCurrentPage();
+  }
+
+  // =========================
+  // 現在ページのログを描画
+  // =========================
+  function renderCurrentPage() {
+    var start    = (currentLogPage - 1) * LOGS_PER_PAGE;
+    var end      = start + LOGS_PER_PAGE;
+    var pageLogs = currentLogs.slice(start, end);
+
+    renderLogs(pageLogs, currentLogs.length);
+    renderPagination(currentLogs.length);
+  }
+
+  // =========================
+  // ログ一覧描画
+  // =========================
+  function renderLogs(pageLogs, totalCount) {
     if (!logContainer) return;
     logContainer.innerHTML = "";
 
-    if (!Array.isArray(logs) || logs.length === 0) {
-      logContainer.innerHTML = '<p class="devlog-empty">' + escapeHtml(getLocalized(UI_STRINGS.emptyLog)) + '</p>';
+    // 0件
+    if (!totalCount || totalCount === 0) {
+      logContainer.innerHTML =
+        '<p class="devlog-empty">' +
+        escapeHtml(getLocalized(UI_STRINGS.emptyLog)) +
+        "</p>";
       return;
     }
 
-    var sorted = logs.slice().sort(function (a, b) {
-      return (b.date || "").localeCompare(a.date || "");
-    });
-
-    sorted.forEach(function (log) {
+    pageLogs.forEach(function (log) {
       var entry = document.createElement("article");
       entry.className = "devlog-entry";
 
@@ -338,19 +367,21 @@
         entry.setAttribute("data-log-id", log.id);
       }
 
-      var dateStr = escapeHtml(log.date || "");
+      var dateStr  = escapeHtml(log.date || "");
       var titleStr = escapeHtml(getLocalized(log.title));
-      var bodyStr = escapeHtml(getLocalized(log.body));
+      var bodyStr  = escapeHtml(getLocalized(log.body));
+
+      // 静的詳細ページへのリンクURL
+      var lang = getCurrentLanguage();
+      var detailUrl = "log/" + lang + "/" + escapeHtml(log.id || "") + ".html";
 
       var imageHtml = "";
       if (log.image) {
         imageHtml =
           '<div class="devlog-image-wrapper">' +
-            '<img class="devlog-image" src="' +
-            escapeHtml(log.image) +
-            '" alt="' +
-            titleStr +
-            '">' +
+          '<img class="devlog-image" src="' +
+          escapeHtml(log.image) +
+          '" alt="' + titleStr + '">' +
           "</div>";
       }
 
@@ -367,9 +398,11 @@
       }
 
       entry.innerHTML =
-        '<time class="devlog-date">' + dateStr + "</time>" +
-        '<h3 class="devlog-title">' + titleStr + "</h3>" +
-        '<p class="devlog-body">' + bodyStr + "</p>" +
+        '<time class="devlog-date">'  + dateStr  + "</time>" +
+        '<h3 class="devlog-title">' +
+          '<a class="devlog-title-link" href="' + detailUrl + '">' + titleStr + '</a>' +
+        "</h3>" +
+        '<p class="devlog-body">'     + bodyStr  + "</p>"    +
         imageHtml +
         tagsHtml;
 
@@ -378,14 +411,78 @@
   }
 
   // =========================
+  // ページャー描画
+  // =========================
+  function renderPagination(totalCount) {
+    if (!paginationContainer) return;
+    paginationContainer.innerHTML = "";
+
+    var totalPages = Math.ceil(totalCount / LOGS_PER_PAGE);
+
+    // 0件 または 1ページのみ → ページャー非表示
+    if (totalPages <= 1) {
+      return;
+    }
+
+    var prevText = getLocalized(UI_STRINGS.paginationPrev);
+    var nextText = getLocalized(UI_STRINGS.paginationNext);
+
+    // 前へボタン
+    var prevBtn = document.createElement("button");
+    prevBtn.type = "button";
+    prevBtn.className = "devlog-page-btn";
+    prevBtn.textContent = prevText;
+    prevBtn.disabled = (currentLogPage === 1);
+    prevBtn.addEventListener("click", function () {
+      if (currentLogPage > 1) {
+        currentLogPage--;
+        renderCurrentPage();
+        scrollToLogArea();
+      }
+    });
+
+    // ページ番号表示
+    var pageInfo = document.createElement("span");
+    pageInfo.className = "devlog-page-info";
+    pageInfo.textContent = currentLogPage + " / " + totalPages;
+
+    // 次へボタン
+    var nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "devlog-page-btn";
+    nextBtn.textContent = nextText;
+    nextBtn.disabled = (currentLogPage === totalPages);
+    nextBtn.addEventListener("click", function () {
+      if (currentLogPage < totalPages) {
+        currentLogPage++;
+        renderCurrentPage();
+        scrollToLogArea();
+      }
+    });
+
+    paginationContainer.appendChild(prevBtn);
+    paginationContainer.appendChild(pageInfo);
+    paginationContainer.appendChild(nextBtn);
+  }
+
+  // =========================
+  // ページ切替後のスクロール
+  // =========================
+  function scrollToLogArea() {
+    if (!logContainer) return;
+    logContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // =========================
   // 初期化
   // =========================
   async function init() {
-    categoryContainer = document.getElementById("devlogCategories");
-    subtabContainer = document.getElementById("devlogSubtabs");
-    logContainer = document.getElementById("devlogEntries");
-    categoryTitle = document.getElementById("devlogCategoryTitle");
-    pageTitleEl = document.getElementById("devlogPageTitle");
+    categoryContainer   = document.getElementById("devlogCategories");
+    subtabContainer     = document.getElementById("devlogSubtabs");
+    logContainer        = document.getElementById("devlogEntries");
+    paginationContainer = document.getElementById("devlogPagination");
+    categoryTitle       = document.getElementById("devlogCategoryTitle");
+    pageTitleEl         = document.getElementById("devlogPageTitle");
 
     // Language選択セットアップ
     setupLanguageSelector();

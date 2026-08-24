@@ -24,7 +24,7 @@ body {
   background:
     linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)),
     url("../assets/images/tavern.png") center/cover no-repeat;
-  padding: 100px 24px 60px;
+  padding: 100px 24px 80px;
 }
 
 /* ========================= */
@@ -138,71 +138,71 @@ body {
 }
 
 /* ========================= */
-/* ログ一覧領域              */
+/* ログ一覧エリア            */
 /* ========================= */
 
 .devlog-log-area {
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-/* スクロールバー */
-.devlog-log-area::-webkit-scrollbar {
-  width: 8px;
-}
-
-.devlog-log-area::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-.devlog-log-area::-webkit-scrollbar-thumb {
-  background: rgba(120, 70, 35, 0.35);
-  border-radius: 4px;
-}
-
-.devlog-log-area::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 70, 35, 0.55);
+  scroll-margin-top: 80px;
 }
 
 /* ========================= */
-/* ログエントリ              */
+/* ログエントリ（個別カード）*/
 /* ========================= */
 
 .devlog-entry {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  background: rgba(53, 39, 31, 0.72);
+  border: 1px solid rgba(160, 100, 45, 0.45);
+  border-radius: 10px;
+  transition: border-color 0.2s ease;
 }
 
 .devlog-entry:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .devlog-date {
   display: block;
-  font-size: 0.9rem;
-  color: #000000;
+  font-size: 0.85rem;
+  color: #b8966a;
   margin-bottom: 6px;
+  letter-spacing: 0.04em;
 }
 
 .devlog-title {
-  margin: 0 0 8px;
-  font-size: 1.2rem;
-  color: #2b2620;
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  color: #f0e0c0;
   font-weight: bold;
+  line-height: 1.45;
+}
+
+/* タイトルリンク */
+.devlog-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.devlog-title-link:hover {
+  color: #f5d08a;
+  text-shadow: 0 0 8px rgba(245, 208, 138, 0.3);
+}
+
+.devlog-title-link:focus-visible {
+  outline: 2px solid #f5d08a;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .devlog-body {
-  margin: 0 0 10px;
+  margin: 0 0 14px;
   font-size: 1rem;
-  line-height: 1.8;
-  color: #3a3a3a;
+  line-height: 1.85;
+  color: #d8c8a8;
 }
 
 .devlog-tags {
@@ -221,27 +221,108 @@ body {
 
 .devlog-image {
   display: block;
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
+
+/* ========================= */
+/* タグ                      */
+/* ========================= */
 
 .devlog-tag {
   display: inline-block;
   padding: 3px 10px;
   font-size: 0.78rem;
-  color: #6b4423;
-  background: rgba(150, 90, 35, 0.12);
-  border: 1px solid rgba(150, 90, 35, 0.2);
+  color: #c8a868;
+  background: rgba(120, 70, 25, 0.2);
+  border: 1px solid rgba(160, 100, 40, 0.38);
   border-radius: 999px;
 }
 
+/* ========================= */
+/* 空状態                    */
+/* ========================= */
+
 .devlog-empty {
   text-align: center;
-  color: #888;
+  color: #9a8060;
   font-size: 1rem;
-  padding: 40px 0;
+  padding: 60px 0;
+}
+
+/* ========================= */
+/* ページャー                */
+/* ========================= */
+
+.devlog-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  max-width: 860px;
+  margin: 28px auto 0;
+}
+
+.devlog-page-btn {
+  padding: 12px 28px;
+  font-family: serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f8e8c3;
+
+  background: linear-gradient(
+    to bottom,
+    #6b4423 0%,
+    #4d2f17 100%
+  );
+
+  border: 2px solid #b8894c;
+  border-radius: 999px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 5px 12px rgba(0, 0, 0, 0.35);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.devlog-page-btn:hover:not(:disabled) {
+  background: linear-gradient(
+    to bottom,
+    #80542d 0%,
+    #5e391c 100%
+  );
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+.devlog-page-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.devlog-page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+
+.devlog-page-info {
+  font-size: 1rem;
+  color: #c8aa70;
+  letter-spacing: 0.06em;
+  text-align: center;
+  flex: 1;
 }
 
 /* ========================= */
@@ -262,17 +343,16 @@ body {
     font-size: 1.4rem;
   }
 
-  .devlog-log-area {
-    padding: 24px;
-    max-height: 65vh;
+  .devlog-entry {
+    padding: 24px 24px;
   }
 
   .devlog-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 
   .devlog-body {
-    font-size: 0.95rem;
+    font-size: 0.97rem;
   }
 }
 
@@ -282,7 +362,7 @@ body {
 
 @media (max-width: 600px) {
   .devlog-layout {
-    padding: 84px 12px 40px;
+    padding: 84px 12px 60px;
   }
 
   .devlog-page-title {
@@ -315,32 +395,26 @@ body {
     font-size: 0.82rem;
   }
 
-  .devlog-log-area {
-    padding: 16px;
-    max-height: 60vh;
-    border-radius: 8px;
-  }
-
   .devlog-entry {
-    padding: 14px 0;
+    padding: 20px 18px;
+    margin-bottom: 14px;
   }
 
   .devlog-date {
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: 0.8rem;
   }
 
   .devlog-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .devlog-body {
-    font-size: 0.88rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.78;
   }
 
   .devlog-tag {
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     padding: 2px 8px;
   }
 
@@ -348,7 +422,17 @@ body {
     margin: 12px 0;
   }
 
-  .devlog-image {
-    border-radius: 8px;
+  .devlog-pagination {
+    margin-top: 20px;
+    gap: 8px;
+  }
+
+  .devlog-page-btn {
+    padding: 10px 16px;
+    font-size: 0.88rem;
+  }
+
+  .devlog-page-info {
+    font-size: 0.9rem;
   }
 }

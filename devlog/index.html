@@ -17,6 +17,33 @@
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/devlog.css" />
+
+  <!-- canonical -->
+  <link rel="canonical" href="https://greybrionstudio.github.io/devlog/index.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Development Log | Greybrion Studio">
+  <meta property="og:description" content="Greybrion Studioの開発ログ。ゲーム開発・ツール開発・AscenderAI開発の進捗を公開しています。">
+  <meta property="og:url"         content="https://greybrionstudio.github.io/devlog/index.html">
+  <meta property="og:site_name"   content="Greybrion Studio">
+  <meta property="og:locale"      content="ja_JP">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Greybrion Studio Development Log",
+    "description": "Greybrion Studioの開発ログ。ゲーム開発・ツール開発・AscenderAI開発の進捗を公開しています。",
+    "url": "https://greybrionstudio.github.io/devlog/index.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Greybrion Studio",
+      "url": "https://greybrionstudio.github.io"
+    }
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -89,6 +116,12 @@
     <div class="devlog-subtabs" id="devlogSubtabs"></div>
 
     <div class="devlog-log-area" id="devlogEntries"></div>
+
+    <nav
+      id="devlogPagination"
+      class="devlog-pagination"
+      aria-label="Development Log Pagination">
+    </nav>
   </main>
 
   <script src="../js/language.js"></script>
