@@ -436,3 +436,206 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* ========================= */
+/* カテゴリ見出しボタン化    */
+/* ========================= */
+
+/* h2 コンテナ自体は余白・揃えのみ残す */
+.devlog-category-heading {
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+/* 見出し内 button */
+.devlog-category-heading-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Cinzel", serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #f5e7c8;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 4px 8px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.devlog-category-heading-btn::after {
+  content: "▾";
+  font-size: 0.7em;
+  opacity: 0.55;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.devlog-category-heading-btn:hover {
+  color: #f5d08a;
+  border-bottom-color: rgba(245, 208, 138, 0.4);
+}
+
+.devlog-category-heading-btn:hover::after {
+  opacity: 0.9;
+}
+
+.devlog-category-heading-btn:focus-visible {
+  outline: 2px solid #f5d08a;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* 一覧モード時：矢印を上向きに */
+.devlog-category-heading-btn.is-list-mode {
+  color: #f5d08a;
+  border-bottom-color: rgba(245, 208, 138, 0.55);
+}
+
+.devlog-category-heading-btn.is-list-mode::after {
+  content: "▴";
+  opacity: 0.9;
+}
+
+/* ========================= */
+/* 一覧モード                */
+/* ========================= */
+
+.devlog-list-mode {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.devlog-list-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(160, 100, 45, 0.22);
+  transition: background 0.15s ease;
+}
+
+.devlog-list-item:last-child {
+  border-bottom: none;
+}
+
+.devlog-list-item:hover {
+  background: rgba(160, 100, 45, 0.07);
+  border-radius: 6px;
+}
+
+.devlog-list-date {
+  font-size: 0.82rem;
+  color: #b8966a;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.devlog-list-link {
+  font-size: 0.97rem;
+  color: #e0d0b0;
+  text-decoration: none;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+
+.devlog-list-link:hover {
+  color: #f5d08a;
+}
+
+.devlog-list-link:focus-visible {
+  outline: 2px solid #f5d08a;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* 戻るボタン（一覧モード先頭） */
+.devlog-list-back-btn {
+  display: block;
+  width: max-content;
+  max-width: 860px;
+  margin: 0 auto 16px;
+  padding: 8px 20px;
+  font-family: serif;
+  font-size: 0.88rem;
+  color: #c8a870;
+  background: transparent;
+  border: 1px solid rgba(160, 100, 45, 0.38);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.devlog-list-back-btn:hover {
+  background: rgba(160, 100, 45, 0.14);
+  color: #f5d08a;
+  border-color: rgba(200, 140, 60, 0.55);
+}
+
+.devlog-list-back-btn:focus-visible {
+  outline: 2px solid #f5d08a;
+  outline-offset: 3px;
+}
+
+/* Preview body（通常カード内） */
+.devlog-body--preview {
+  /* 通常の .devlog-body に上書きなし: レイアウトは共通 */
+  /* 見た目の区別は不要だが識別クラスとして残す */
+}
+
+/* ========================= */
+/* 一覧モード タブレット     */
+/* ========================= */
+
+@media (max-width: 900px) {
+  .devlog-category-heading-btn {
+    font-size: 1.35rem;
+  }
+
+  .devlog-list-item {
+    grid-template-columns: 90px 1fr;
+    column-gap: 10px;
+  }
+}
+
+/* ========================= */
+/* 一覧モード スマホ         */
+/* ========================= */
+
+@media (max-width: 600px) {
+  .devlog-category-heading-btn {
+    font-size: 1.15rem;
+    padding: 3px 4px;
+  }
+
+  .devlog-list-item {
+    grid-template-columns: 82px 1fr;
+    column-gap: 8px;
+    padding: 9px 8px;
+  }
+
+  .devlog-list-date {
+    font-size: 0.76rem;
+  }
+
+  .devlog-list-link {
+    font-size: 0.9rem;
+  }
+
+  .devlog-list-back-btn {
+    font-size: 0.82rem;
+    padding: 7px 16px;
+  }
+}
