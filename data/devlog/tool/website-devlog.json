@@ -1,8 +1,31 @@
 {
   "version": "1.0",
   "projectId": "website",
-  "lastUpdated": "2026-07-16",
+  "lastUpdated": "2026-08-25",
   "logs": [
+    {
+      "id": "website-20260825-001",
+      "date": "2026-08-25",
+      "title": {
+        "ja": "Development Logの閲覧・静的索引構造を改善",
+        "en": "Improved Development Log browsing and static indexing"
+      },
+      "body": {
+        "ja": "Development Logの閲覧構造を見直し、通常のログ一覧と個別詳細ページの役割を整理しました。通常の一覧では本文を短いプレビュー表示へ変更し、1ページ5件のページングを維持しながら、各ログの内容を素早く確認できるようにしています。\n\nまた、ゲーム開発・ツール開発・AscenderAI開発の各カテゴリ見出しから、対象となる全ログを日付とタイトルの一覧で確認できる機能を追加しました。ツール開発ではManual Grid Authoring Toolや公式サイトなど、各サブカテゴリ単位で過去ログを一覧表示できます。一覧のタイトルをクリックすると、日本語・英語それぞれの個別詳細ページへ移動し、全文を読むことができます。\n\nさらに、Dev Log JSONを唯一の正本として、生成スクリプトから日本語・英語の静的HTMLとsitemapを自動生成する構造を整備しました。これにより、人間は通常のDevelopment Log UIから開発履歴を探しやすくなり、JavaScriptを実行しない検索エンジンやAIクローラーからも各ログの詳細URLと本文へ到達しやすい構成になりました。\n\n個別詳細ページについても、本文領域とページ背景で使用していたCSSクラスの衝突を解消し、記事全体を統一された茶色のカード背景で表示するよう改善しました。これにより、背景画像が本文部分へ透ける問題を解消し、日本語・英語の両方で読みやすい表示へ統一しています。",
+        "en": "Reworked the Development Log browsing structure and clarified the roles of the main log list and individual detail pages. The standard log view now shows a short preview instead of the full body while keeping the existing five-entry pagination, making it easier to quickly scan recent development updates.\n\nAdded full log index views accessible from the Game Development, Tool Development, and AscenderAI Development section headings. For Tool Development, past logs can also be browsed by subcategory, such as Manual Grid Authoring Tool and the official website. Each log title links to its Japanese or English static detail page, where the full entry can be read.\n\nThe Dev Log JSON remains the single source of truth, while the generation script now produces Japanese and English static HTML pages and updates the sitemap automatically. This improves navigation for human visitors while also making individual log URLs and full content easier for search engines and AI crawlers to discover without relying on JavaScript execution.\n\nThe individual detail page styling was also improved by resolving a CSS class collision between the page background and the article content wrapper. The full article is now displayed on a consistent brown card background, preventing the tavern background image from showing through the text area and improving readability in both Japanese and English."
+      },
+      "tags": [
+        "website",
+        "devlog",
+        "ui",
+        "navigation",
+        "static-html",
+        "seo",
+        "crawler",
+        "localization"
+      ],
+      "image": null
+    },
     {
       "id": "website-20260716-001",
       "date": "2026-07-16",
@@ -14,7 +37,14 @@
         "ja": "Language切り替えUIをサイト全体へ導入。Languageドロップダウンを既存UIへ統一。Contactメニューを整理し、Blueskyの外部JSON管理へ変更。今後の多言語対応とSNS追加が容易な構成へ改善。",
         "en": "Introduced a site-wide language switcher UI. Unified the Language dropdown with the existing navigation style. Reorganized the Contact menu and migrated Bluesky link management to external JSON. Improved architecture for future multilingual support and easy SNS additions."
       },
-      "tags": ["ui", "localization", "language", "navigation", "bluesky", "website"],
+      "tags": [
+        "ui",
+        "localization",
+        "language",
+        "navigation",
+        "bluesky",
+        "website"
+      ],
       "image": null
     }
   ]

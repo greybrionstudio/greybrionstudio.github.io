@@ -15,9 +15,21 @@
   </url>
   <url>
     <loc>https://greybrionstudio.github.io/devlog/index.html</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/website-20260825-001.html</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/website-20260825-001.html</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260816-001.html</loc>
