@@ -86,7 +86,7 @@
       <time class="dls-date" datetime="2026-07-15">2026-07-15</time>
       <h1 class="dls-title">Knowledge FoundationのRuntime検証</h1>
 
-      <div class="dls-body">
+      <div class="dls-content">
         <p>Knowledge Foundation全体のRuntime検証を実施し、Knowledge Structuring AIからKnowledgeDBへ保存されるまでの実行フローを検証しました。検証の結果、Knowledge Structuring AIへEntity抽出、Knowledge生成、Relation生成など多くの責務を集約していたことでPromptが肥大化し、EvidenceよりもルールやSchemaを優先して解釈してしまう問題が発生しました。SchemaSelectorによる必要なDatabase Schemaのみの読込、JsonElementを利用した柔軟な値処理への対応、Promptの改善など複数の対策を実施しましたが、根本的な解決には至りませんでした。この結果を受け、単一AIへ責務を集中させる設計では今後の拡張や品質向上に限界があると判断し、専門領域ごとに責務を分離する新アーキテクチャへの移行を決定しました。現在はSpecialtyManagerを中心に、専門AIと共通実行パッケージを組み合わせた構成の設計を進めており、Knowledge Foundationの品質・保守性・拡張性をさらに向上させるための次世代アーキテクチャの構築を進めています。</p>
       </div>
 

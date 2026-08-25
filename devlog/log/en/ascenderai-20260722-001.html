@@ -86,7 +86,7 @@
       <time class="dls-date" datetime="2026-07-22">2026-07-22</time>
       <h1 class="dls-title">Completed the Specialty AI Architecture</h1>
 
-      <div class="dls-body">
+      <div class="dls-content">
         <p>During repeated runtime verification of the Knowledge Foundation, it became clear that concentrating entity extraction, relation generation, knowledge generation, and update decisions into a single Knowledge Structuring AI caused the prompt to become excessively large. As a result, the LLM increasingly prioritized rules and database schemas over the actual evidence. Various improvements, including schema filtering with SchemaSelector, prompt refinements, and JSON structure redesign, were introduced, but they did not fundamentally solve the problem.</p>
         <p>To address this, the architecture was redesigned from the ground up. The monolithic AI was replaced with specialized AIs dedicated to individual entity domains such as User, Company, Project, ParentTask, ChildTask, AI, Document, and Code. These specialized AIs are connected through a shared execution pipeline consisting of the GenericCandidateBuilder, CandidateValidator, Decision Pipeline, and Knowledge Repository.</p>
         <p>The role of the LLM was fundamentally redefined. Instead of generating complete entities, its responsibility is now limited to extracting values from evidence. Those extracted values are assembled into common templates by the application, while validation, decision making, and persistence are handled through a deterministic shared runtime. This approach minimizes probabilistic output from the LLM while allowing the application to guarantee consistent entity structures and persistence behavior.</p>

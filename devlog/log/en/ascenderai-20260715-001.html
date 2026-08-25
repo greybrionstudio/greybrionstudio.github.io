@@ -86,7 +86,7 @@
       <time class="dls-date" datetime="2026-07-15">2026-07-15</time>
       <h1 class="dls-title">Runtime Verification for the Knowledge Foundation</h1>
 
-      <div class="dls-body">
+      <div class="dls-content">
         <p>Runtime verification was carried out across the entire Knowledge Foundation to validate the execution flow from the Knowledge Structuring AI through persistence into the KnowledgeDB. The investigation revealed that concentrating entity extraction, knowledge generation, relation generation, and other responsibilities into a single Knowledge Structuring AI caused the prompt to become excessively large, leading the model to prioritize rules and schema over the actual evidence. Several improvements were implemented, including selective database schema loading through the SchemaSelector, flexible value handling using JsonElement, and prompt refinements, but these measures did not fully resolve the underlying issue. Based on these findings, it was concluded that the current monolithic design would limit future scalability and quality improvements, leading to the decision to transition to a new architecture with responsibilities separated by specialized domains. The next-generation architecture is currently being designed around SpecialtyManager, combining specialized AI modules with a shared execution package to further improve the quality, maintainability, and scalability of the Knowledge Foundation.</p>
       </div>
 
