@@ -86,7 +86,7 @@
       <time class="dls-date" datetime="2026-07-22">2026-07-22</time>
       <h1 class="dls-title">Specialty AI Architectureの完成</h1>
 
-      <div class="dls-body">
+      <div class="dls-content">
         <p>Knowledge FoundationのRuntime検証を重ねる中で、Knowledge Structuring AIへEntity抽出・Relation生成・Knowledge生成・更新判定など多くの責務を集約した構成では、Promptが大規模化し、LLMがEvidenceよりもルールやSchemaを優先して解釈してしまうことが分かりました。SchemaSelectorによる対象Schemaの絞り込み、Prompt改善、JSON構造の見直しなど様々な対策を行いましたが、本質的な改善には至りませんでした。</p>
         <p>そこで設計を根本から見直し、1つのAIにすべてを任せる構成を廃止しました。代わりに、User・Company・Project・ParentTask・ChildTask・AI・Document・Codeなど各Entity専用のSpecialty AIへ責務を分割し、それらを共通実行基盤であるGenericCandidateBuilder、CandidateValidator、Decision Pipeline、Knowledge Repositoryへ接続する新しいアーキテクチャへ移行しました。</p>
         <p>また、LLMの役割も根本から見直し、従来のようにEntity全体を生成させる構成を廃止しました。LLMの責務はEvidenceから必要な値（Values）の抽出のみに限定し、抽出された値をプログラム側で共通テンプレートへ組み立て、Validation・Decision・Persistenceまでを一貫した共通処理で実行する構成へ変更しています。これにより、LLMの出力を最小限に抑えながら、Entity構造や保存処理の一貫性をコード側で保証できるようになりました。</p>

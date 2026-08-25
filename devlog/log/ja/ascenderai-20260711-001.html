@@ -86,7 +86,7 @@
       <time class="dls-date" datetime="2026-07-11">2026-07-11</time>
       <h1 class="dls-title">AI実行基盤の共通化</h1>
 
-      <div class="dls-body">
+      <div class="dls-content">
         <p>複数のAIで個別に管理されていたPrompt生成、LLM実行、Response解析、Retry処理をAIExecutionManagerへ統合しました。ConversationAnalysisAI、ConversationContextAI、ConversationAI、ConversationResponseAnalysisAIを共通実行基盤へ移行し、AI機能の追加や保守を行いやすい構成へ改善しました。従来は各AIがそれぞれ実行処理を持っていたため、機能追加や修正のたびに同様の処理を複数箇所で実装・保守する必要がありました。AIExecutionManagerへ責務を集約したことで、各AIは本来の役割に専念できるようになり、AIの追加・保守・拡張を効率的に行えるアーキテクチャへ進化しました。</p>
       </div>
 
