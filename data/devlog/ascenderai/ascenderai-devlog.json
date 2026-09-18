@@ -1,8 +1,89 @@
 {
   "version": "1.0",
   "projectId": "ascenderai",
-  "lastUpdated": "2026-08-16",
+  "lastUpdated": "2026-09-18",
   "logs": [
+    {
+      "id": "ascenderai-20260918-001",
+      "date": "2026-09-18",
+      "title": {
+        "ja": "長文・混合入力のScanner Runtime統合と検証",
+        "en": "Integrated and Verified Scanner Runtime for Long and Mixed Input"
+      },
+      "body": {
+        "ja": "長文・混合入力処理を更新し、軽量分析に続くEvidence分析と、必要な候補領域への詳細検査をScanner Runtimeとして統合しました。\n\nCode、JSON、XML、Document、Log、Mixed、Long Inputを含む複数種類の入力で検証を行い、RawInputからScanResultまでのScanner Runtimeが一貫して動作することを確認しました。Evidenceの追跡、UTF-16基準の位置情報、決定的な処理順序、Budget制御、Fail Safe、Runtime Logging / Metricsについても検証しています。\n\n次はScanner全体の最終確認を行い、その後Chunk Builderの実装へ進む予定です。",
+        "en": "Updated long and mixed-input processing by integrating evidence analysis and targeted deeper inspection into the Scanner Runtime.\n\nVerification was performed across multiple input types, including Code, JSON, XML, Document, Log, Mixed, and Long Input, confirming the Scanner Runtime flow from RawInput to ScanResult. Evidence traceability, UTF-16-based positions, deterministic ordering, budget control, fail-safe behavior, and runtime logging and metrics were also verified.\n\nNext, the Scanner will undergo final completion verification before development moves on to the Chunk Builder."
+      },
+      "image": null,
+      "tags": [
+        "input",
+        "scanner",
+        "runtime",
+        "analysis",
+        "long-context",
+        "verification"
+      ]
+    },
+    {
+      "id": "ascenderai-20260909-001",
+      "date": "2026-09-09",
+      "title": {
+        "ja": "必要な領域だけを詳しく調べる段階的解析を実装",
+        "en": "Implemented Targeted Multi-Stage Input Inspection"
+      },
+      "body": {
+        "ja": "入力全体へ一律に重い解析を行うのではなく、軽量な観測とEvidence分析で候補を絞り込み、必要な領域だけを段階的に詳しく調べる解析処理を実装しました。\n\nRuleやPatternによる検査に加え、必要な場合だけ構造解析を試行する構成とし、詳細解析が入力全体へ不必要に広がらないようBudgetによる制御も組み込んでいます。\n\nこれにより、長文や複合入力をScanner Runtimeへ統合するために必要な詳細検査側の基盤が整いました。",
+        "en": "Implemented a staged inspection process that avoids applying expensive analysis uniformly across an entire input. Lightweight observation and evidence analysis first narrow the candidate regions, after which deeper inspection is applied only where needed.\n\nThe inspection flow combines rule- and pattern-based checks with structural probing when appropriate, while budget controls prevent deeper analysis from expanding unnecessarily across the full input.\n\nThis established the deeper-inspection foundation required to integrate long and mixed input processing into the Scanner Runtime."
+      },
+      "image": null,
+      "tags": [
+        "input",
+        "analysis",
+        "scanner",
+        "runtime",
+        "long-context"
+      ]
+    },
+    {
+      "id": "ascenderai-20260906-001",
+      "date": "2026-09-06",
+      "title": {
+        "ja": "軽量観測から得たEvidenceの分析基盤を実装",
+        "en": "Implemented Evidence Analysis for Lightweight Input Observation"
+      },
+      "body": {
+        "ja": "入力の軽量観測で得られた情報を集約し、どの領域を後続の詳細解析へ渡すべきか判断するEvidence分析基盤を実装しました。\n\n複数の観測結果を関連付けながら、境界候補や解析対象となる領域候補へ整理できる構成とし、後続処理でもEvidenceとの対応関係を追跡できるようにしています。\n\nこれにより、入力全体を重く解析するのではなく、観測結果を根拠として必要な領域を選び出す段階へInput Foundationが進みました。",
+        "en": "Implemented an evidence-analysis foundation that aggregates signals from lightweight input observation and determines which regions should be passed to later, deeper analysis.\n\nMultiple observations can be related and organized into boundary and candidate-region information while preserving traceability back to the supporting evidence for downstream processing.\n\nThis moves the Input Foundation toward selecting relevant regions from observed evidence instead of applying expensive analysis across the entire input."
+      },
+      "image": null,
+      "tags": [
+        "input",
+        "evidence",
+        "analysis",
+        "foundation",
+        "long-context"
+      ]
+    },
+    {
+      "id": "ascenderai-20260903-001",
+      "date": "2026-09-03",
+      "title": {
+        "ja": "長文入力の軽量観測処理を実装",
+        "en": "Implemented Lightweight Observation for Long Input"
+      },
+      "body": {
+        "ja": "長文や複合入力を効率的に解析するため、入力全体を最初から詳細解析せず、文字や構造上の特徴を軽量に観測する処理を実装しました。\n\n入力位置を保持しながら特徴を収集し、後続のEvidence分析や詳細解析が必要な場所を判断するための情報を生成できる構成にしています。同じ入力に対して一貫した観測結果を得られることも重視しています。\n\nこれにより、段階的な長文解析を実際のScanner処理へつなげていくための最初の実装段階が整いました。",
+        "en": "Implemented lightweight observation for efficiently analyzing long and mixed inputs without performing detailed analysis across the entire input from the start.\n\nThe process collects structural and textual signals while preserving their positions in the original input, producing information that later stages can use to decide where evidence analysis and deeper inspection are needed. Consistent results for the same input are also maintained as part of the design.\n\nThis established the first implementation stage for connecting the staged long-input analysis architecture to the Scanner processing flow."
+      },
+      "image": null,
+      "tags": [
+        "input",
+        "observation",
+        "analysis",
+        "long-context",
+        "foundation"
+      ]
+    },
     {
       "id": "ascenderai-20260816-001",
       "date": "2026-08-16",
@@ -11,8 +92,8 @@
         "en": "Added AI Processing Review and Observability"
       },
       "body": {
-        "ja": "AIの処理結果を自動的に検証・レビューし、その状態を画面上から確認できる仕組みを追加しました。\n\nレビュー対象は必要に応じて切り替えられるようにし、処理中の状態や検証結果もリアルタイムで確認できるようにしています。これにより、人間が直接確認しにくいAI内部の処理についても、品質や状態を把握しながら開発を進めやすくなりました。\n\n今回の改善により、AscenderAIは単にAIの回答を表示するだけでなく、処理の流れや結果を確認しながら改善できる開発環境へ一歩進みました。",
-        "en": "Added a system for automatically validating and reviewing AI processing results, with review status visible directly in the interface.\n\nReview targets can be enabled or disabled as needed, while processing status and validation results can also be observed in real time. This makes it easier to develop and improve AI behavior even in areas that are difficult for people to inspect directly.\n\nWith this update, AscenderAI has moved beyond simply displaying AI responses toward an environment where developers can observe, verify, and improve how AI processing behaves."
+        "ja": "AIの処理結果を自動的に検証・レビューし、その結果を画面上から確認できる仕組みを追加しました。\n\nレビュー対象は必要に応じて切り替えられるようにし、レビュー結果を画面上でリアルタイムに確認できるようにしています。これにより、人間が直接確認しにくいAI内部の処理についても、品質や状態を把握しながら開発を進めやすくなりました。\n\n今回の改善により、AscenderAIは単にAIの回答を表示するだけでなく、処理の結果を検証・確認しながら改善できる開発環境へ一歩進みました。",
+        "en": "Added a system for automatically validating and reviewing AI processing results, with review results visible directly in the interface.\n\nReview targets can be enabled or disabled as needed, and review results are reflected in the interface in real time. This makes it easier to develop and improve AI behavior even in areas that are difficult for people to inspect directly.\n\nWith this update, AscenderAI has moved beyond simply displaying AI responses toward an environment where developers can verify and review processing results while improving the system."
       },
       "image": null,
       "tags": [
@@ -111,8 +192,8 @@
         "en": "Completed Runtime Integration for the Specialty AI Architecture"
       },
       "body": {
-        "ja": "Specialty AI Architectureを実際の会話処理へ統合し、会話後の知識整理・保存までを一連の流れとして動作させられるようにしました。\n\nこれにより、専門領域ごとに役割を分けたAIが共通の実行基盤上で動作し、会話から得られた情報を継続的に知識として活用できる状態になりました。\n\n設計として完成していたSpecialty AI Architectureが実際のRuntimeへ接続されたことで、Knowledge Foundationは実運用に近い形で動作する段階へ進みました。",
-        "en": "Integrated the Specialty AI Architecture into the live conversation flow so that knowledge organization and persistence can run as part of the end-to-end runtime after a conversation.\n\nSpecialized AIs can now operate on a shared execution foundation and continuously turn information from conversations into reusable knowledge.\n\nWith the architecture now connected to the actual runtime, the Knowledge Foundation has moved from an architectural design into a more operational stage of the system."
+        "ja": "Specialty AI Architectureを実際の会話処理へ統合し、会話後の知識整理・保存までを一連の流れとして動作させられるようにしました。\n\nこれにより、専門領域ごとに処理を分ける仕組みが共通の実行基盤上で動作し、会話から得られた情報を継続的に知識として活用できる状態になりました。\n\n設計として整えていたSpecialty AI Architectureが実際のRuntimeへ接続されたことで、Knowledge Foundationは実運用に近い形で動作する段階へ進みました。",
+        "en": "Integrated the Specialty AI Architecture into the live conversation flow so that knowledge organization and persistence can run as part of the end-to-end runtime after a conversation.\n\nWith this, domain-specific processing now operates on a shared execution foundation and can continuously turn information from conversations into reusable knowledge.\n\nWith the architecture now connected to the actual runtime, the Knowledge Foundation has moved from an architectural design into a more operational stage of the system."
       },
       "image": null,
       "tags": [
@@ -131,8 +212,8 @@
         "en": "Completed the Specialty AI Architecture"
       },
       "body": {
-        "ja": "Knowledge FoundationのRuntime検証を重ねる中で、Knowledge Structuring AIへEntity抽出・Relation生成・Knowledge生成・更新判定など多くの責務を集約した構成では、Promptが大規模化し、LLMがEvidenceよりもルールやSchemaを優先して解釈してしまうことが分かりました。SchemaSelectorによる対象Schemaの絞り込み、Prompt改善、JSON構造の見直しなど様々な対策を行いましたが、本質的な改善には至りませんでした。\n\nそこで設計を根本から見直し、1つのAIにすべてを任せる構成を廃止しました。代わりに、User・Company・Project・ParentTask・ChildTask・AI・Document・Codeなど各Entity専用のSpecialty AIへ責務を分割し、それらを共通実行基盤であるGenericCandidateBuilder、CandidateValidator、Decision Pipeline、Knowledge Repositoryへ接続する新しいアーキテクチャへ移行しました。\n\nまた、LLMの役割も根本から見直し、従来のようにEntity全体を生成させる構成を廃止しました。LLMの責務はEvidenceから必要な値（Values）の抽出のみに限定し、抽出された値をプログラム側で共通テンプレートへ組み立て、Validation・Decision・Persistenceまでを一貫した共通処理で実行する構成へ変更しています。これにより、LLMの出力を最小限に抑えながら、Entity構造や保存処理の一貫性をコード側で保証できるようになりました。\n\nこの変更により、すべてのSpecialty AIは共通Runtime上で動作できるようになり、Promptの小型化、品質の安定化、保守性・拡張性の向上を実現しました。また、新しいSpecialty AIを追加する場合でも、PromptとEntity定義を追加するだけで共通実行基盤へ組み込めるようになりました。\n\nKnowledge Foundationは、単一AIへ多くの責務を集中させる構成から、LLMとプログラムの責務を明確に分離した専門AIアーキテクチャへ進化しました。LLMはEvidenceから必要な値（Values）の抽出に専念し、抽出された値を共通テンプレートへ組み立てる処理、検証、判定、保存は共通実行基盤が担うことで、LLMの確率的な出力に依存しない再現性の高いRuntimeを実現しています。また、すべてのSpecialty AIは同じ実行基盤を共有しているため、新しい専門AIを追加する場合でも、PromptとEntity定義を追加するだけで共通Runtimeへ組み込める拡張性の高い構成となりました。これにより、本アーキテクチャはKnowledge OSの中核となる知識基盤として、継続的な機能追加や将来的な発展にも柔軟に対応できる構成へ進化しました。",
-        "en": "During repeated runtime verification of the Knowledge Foundation, it became clear that concentrating entity extraction, relation generation, knowledge generation, and update decisions into a single Knowledge Structuring AI caused the prompt to become excessively large. As a result, the LLM increasingly prioritized rules and database schemas over the actual evidence. Various improvements, including schema filtering with SchemaSelector, prompt refinements, and JSON structure redesign, were introduced, but they did not fundamentally solve the problem.\n\nTo address this, the architecture was redesigned from the ground up. The monolithic AI was replaced with specialized AIs dedicated to individual entity domains such as User, Company, Project, ParentTask, ChildTask, AI, Document, and Code. These specialized AIs are connected through a shared execution pipeline consisting of the GenericCandidateBuilder, CandidateValidator, Decision Pipeline, and Knowledge Repository.\n\nThe role of the LLM was fundamentally redefined. Instead of generating complete entities, its responsibility is now limited to extracting values from evidence. Those extracted values are assembled into common templates by the application, while validation, decision making, and persistence are handled through a deterministic shared runtime. This approach minimizes probabilistic output from the LLM while allowing the application to guarantee consistent entity structures and persistence behavior.\n\nAs a result, every Specialty AI now runs on the same shared runtime, significantly reducing prompt size while improving stability, maintainability, and scalability. New specialties can now be added by providing only a prompt and entity definition.\n\nThe Knowledge Foundation has evolved from a monolithic AI architecture into a specialized AI architecture with a clear separation of responsibilities between the LLM and the application. The LLM is dedicated to extracting values from evidence, while the shared runtime assembles those values into common templates and performs validation, decision making, and persistence. This architecture provides a highly reproducible runtime that is no longer dependent on probabilistic LLM outputs. Because every Specialty AI shares the same execution foundation, new AI domains can be integrated simply by adding a prompt and an entity definition. As a result, the architecture has evolved into the extensible knowledge foundation at the core of the Knowledge OS, designed to support continuous feature expansion and future growth with high maintainability and scalability."
+        "ja": "Knowledge FoundationのRuntime検証を重ねる中で、Knowledge Structuring AIへEntity抽出・Relation生成・Knowledge生成・更新判定など多くの責務を集約した構成では、Promptが大規模化し、LLMがEvidenceよりもルールやSchemaを優先して解釈してしまうことが分かりました。SchemaSelectorによる対象Schemaの絞り込み、Prompt改善、JSON構造の見直しなど様々な対策を行いましたが、本質的な改善には至りませんでした。\n\nそこで設計を根本から見直し、1つのAIにすべてを任せる構成を廃止しました。代わりに、User・Company・Project・ParentTask・ChildTask・AI・Document・Codeといった専門領域ごとに処理を分けるSpecialty構成へ移行し、共通実行基盤であるGenericCandidateBuilder、CandidateValidator、判定処理、Knowledge Repositoryへ接続する新しいアーキテクチャへ切り替えました。専門領域ごとに個別のAIを作るのではなく、共通の実行基盤の上で、専門領域ごとの定義（Definition）とPromptによって処理を切り替える方式としています。\n\nまた、LLMの役割も根本から見直し、従来のようにEntity全体を生成させる構成を廃止しました。LLMの責務はEvidenceから必要な値（Values）の抽出のみに限定し、抽出された値をプログラム側で共通テンプレートへ組み立て、Validation・判定・保存までを一貫した共通処理で実行する構成へ変更しています。これにより、LLMの出力を最小限に抑えながら、Entity構造や保存処理の一貫性をコード側で保証できるようになりました。\n\nこの変更により、専門領域ごとの処理は共通Runtime上で動作できるようになり、Promptの小型化、品質の安定化、保守性・拡張性の向上を実現しました。専門領域を追加する際も、共通実行基盤を再利用しながら、専門領域の定義とPromptを中心に拡張できる構成を目指しています。\n\nKnowledge Foundationは、単一AIへ多くの責務を集中させる構成から、LLMとプログラムの責務を明確に分離したアーキテクチャへ進化しました。LLMはEvidenceから必要な値（Values）の抽出に専念し、抽出された値を共通テンプレートへ組み立てる処理、検証、判定、保存は共通実行基盤が担うことで、LLMの確率的な出力に依存しにくい再現性の高いRuntimeを目指しています。これにより、本アーキテクチャはKnowledge OSの中核となる知識基盤として、継続的な機能追加や将来的な発展にも対応しやすい構成へ進化しました。",
+        "en": "During repeated runtime verification of the Knowledge Foundation, it became clear that concentrating entity extraction, relation generation, knowledge generation, and update decisions into a single Knowledge Structuring AI caused the prompt to become excessively large. As a result, the LLM increasingly prioritized rules and database schemas over the actual evidence. Various improvements, including schema filtering with SchemaSelector, prompt refinements, and JSON structure redesign, were introduced, but they did not fundamentally solve the problem.\n\nTo address this, the architecture was redesigned from the ground up. The monolithic AI was replaced with a specialty-based approach that separates processing by domain such as User, Company, Project, ParentTask, ChildTask, AI, Document, and Code, connected through a shared execution foundation consisting of the GenericCandidateBuilder, CandidateValidator, decision processing, and the Knowledge Repository. Rather than building a separate AI per domain, a shared execution foundation switches behavior based on per-domain definitions and prompts.\n\nThe role of the LLM was fundamentally redefined. Instead of generating complete entities, its responsibility is now limited to extracting values from evidence. Those extracted values are assembled into common templates by the application, while validation, decision making, and persistence are handled through a shared, deterministic runtime. This approach minimizes probabilistic output from the LLM while allowing the application to keep entity structures and persistence behavior consistent.\n\nAs a result, domain-specific processing now runs on the same shared runtime, reducing prompt size while improving stability, maintainability, and extensibility. When adding a new domain, the goal is to extend the system mainly through its definition and prompt while reusing the shared execution foundation.\n\nThe Knowledge Foundation has evolved from a monolithic AI architecture into one with a clear separation of responsibilities between the LLM and the application. The LLM focuses on extracting values from evidence, while the shared runtime assembles those values into common templates and performs validation, decision making, and persistence, aiming for a reproducible runtime that is less dependent on probabilistic LLM output. As a result, the architecture has evolved into a knowledge foundation at the core of the Knowledge OS, better suited to continuous feature expansion and future growth."
       },
       "image": null,
       "tags": [
@@ -172,8 +253,8 @@
         "en": "Implemented the Knowledge Repository Foundation"
       },
       "body": {
-        "ja": "Knowledge Foundation全体からKnowledgeDBへ統一的にアクセスできる仕組みを実現するため、Knowledge Repository基盤を実装しました。KnowledgeDBに対する保存、読込、検索、更新、削除などのデータ操作をRepositoryへ集約することで、各機能がデータの保存方法を意識することなく知識を利用できるようになりました。これにより、KnowledgeDBへのアクセス方法を共通化するとともに、将来的なデータベース構成の変更や検索機能の強化、RAGとの連携などにも柔軟に対応できる拡張性の高いデータアクセス基盤を実現しました。",
-        "en": "Implemented the Knowledge Repository foundation to provide a unified access layer for the entire Knowledge Foundation. By centralizing save, load, search, update, and delete operations into the repository, each component can interact with the KnowledgeDB without being aware of the underlying persistence mechanism. This unifies data access across the system while providing a flexible foundation for future database changes, enhanced search capabilities, and deeper integration with RAG and other knowledge-based features."
+        "ja": "Knowledge Foundation全体からKnowledgeDBへ統一的にアクセスできる仕組みを実現するため、Knowledge Repository基盤を実装しました。KnowledgeDBに対する保存、読込、検索、削除などのデータ操作をRepositoryへ集約することで、各機能がデータの保存方法を意識することなく知識を利用できるようになりました。これにより、KnowledgeDBへのアクセス方法を共通化するとともに、将来的なデータベース構成の変更や検索機能の強化、RAGとの連携などにも対応しやすいデータアクセス基盤を整えました。",
+        "en": "Implemented the Knowledge Repository foundation to provide a unified access layer for the entire Knowledge Foundation. By centralizing operations such as save, load, search, and delete into the repository, each component can interact with the KnowledgeDB without being aware of the underlying persistence mechanism. This unifies data access across the system while providing a foundation that can more easily accommodate future database changes, enhanced search capabilities, and deeper integration with RAG and other knowledge-based features."
       },
       "image": null,
       "tags": [
