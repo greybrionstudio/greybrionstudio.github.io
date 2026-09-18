@@ -85,6 +85,48 @@
       ]
     },
     {
+      "id": "ascenderai-20260902-001",
+      "date": "2026-09-02",
+      "title": {
+        "ja": "AI会話の実行制御基盤を構築",
+        "en": "Built an Execution Control Foundation for AI Conversation"
+      },
+      "body": {
+        "ja": "AI会話処理において、リトライ・ループ・停止といった実行の流れを共通の仕組みで制御するApplication Execution Protocol基盤を構築しました。\n\nContent Reviewの再試行、Runtime Review結果によるConversation全体の再実行、MaxAttempts到達時の安全停止といった実行パターンを、AI会話固有の判定ロジックから分離した共通の実行制御として扱えるようにしています。\n\nこれにより、Review判定の結果をどう実行に反映するか、どの地点からやり直すかを、コードで明確に定義できる構成となりました。Human送信や既存のConversation Runtimeとの互換性は維持しています。",
+        "en": "Built an Application Execution Protocol foundation for controlling the execution flow of AI conversation processing, including retry, loop, and stop behavior through a shared mechanism.\n\nExecution patterns such as retrying Content Review, re-running the full conversation based on a Runtime Review result, and safely stopping when MaxAttempts is reached are now handled as common execution control, separated from AI conversation-specific review decisions.\n\nThis makes it possible to define clearly in code how review decisions are reflected in execution and where processing should resume. Compatibility with human conversation sending and the existing Conversation Runtime is maintained."
+      },
+      "image": null,
+      "tags": [
+        "ai",
+        "conversation",
+        "runtime",
+        "execution",
+        "architecture",
+        "foundation"
+      ]
+    },
+    {
+      "id": "ascenderai-20260819-001",
+      "date": "2026-08-19",
+      "title": {
+        "ja": "AI会話の二段階レビューとTerminalコマンド基盤を整備",
+        "en": "Established Two-Stage AI Conversation Review and Terminal Command Foundation"
+      },
+      "body": {
+        "ja": "AI会話の送信前にContent Reviewを、送信後にRuntime Reviewを二段階で自動実行し、品質基準を満たしているかを管理された方法で確認できる基盤を整備しました。\n\nReview結果とAttempt履歴を追跡しながら再実行判定ができる構成とし、Human送信や既存の会話処理との互換性は維持しています。Internal Terminal UIおよびlocalhost限定の外部コマンドインターフェース（CLIタブ）も追加し、Terminal経由でも同じAI会話フローを実行・確認できるようにしました。\n\nInternal / External Terminal両方から、Content Review・Runtime Review・Review Chain・Attemptの動作を実Runtimeで検証しています。",
+        "en": "Established a foundation for automatically running a two-stage review process for AI conversations: Content Review before sending and Runtime Review after the conversation, allowing quality to be checked in a controlled way.\n\nThe system tracks review results and attempt history to support retry decisions, while remaining compatible with human conversation sending and the existing conversation flow. An Internal Terminal UI and a localhost-limited external command interface (CLI tab) were also added, making it possible to run and inspect the same AI conversation flow from a terminal.\n\nThe operation of Content Review, Runtime Review, Review Chain, and Attempt management was verified in the live runtime from both Internal and External Terminal."
+      },
+      "image": null,
+      "tags": [
+        "ai",
+        "conversation",
+        "review",
+        "terminal",
+        "runtime",
+        "foundation"
+      ]
+    },
+    {
       "id": "ascenderai-20260816-001",
       "date": "2026-08-16",
       "title": {
