@@ -67,7 +67,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260902-001.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/ascenderai-20260902-001.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <url>
     <loc>https://greybrionstudio.github.io/devlog/log/ja/website-20260825-001.html</loc>
     <lastmod>2026-08-25</lastmod>
@@ -77,6 +88,18 @@
   <url>
     <loc>https://greybrionstudio.github.io/devlog/log/en/website-20260825-001.html</loc>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260819-001.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/ascenderai-20260819-001.html</loc>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
