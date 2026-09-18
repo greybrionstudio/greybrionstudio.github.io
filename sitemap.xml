@@ -15,10 +15,59 @@
   </url>
   <url>
     <loc>https://greybrionstudio.github.io/devlog/index.html</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260918-001.html</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/ascenderai-20260918-001.html</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260909-001.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/ascenderai-20260909-001.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260906-001.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/ascenderai-20260906-001.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/ja/ascenderai-20260903-001.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greybrionstudio.github.io/devlog/log/en/ascenderai-20260903-001.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <url>
     <loc>https://greybrionstudio.github.io/devlog/log/ja/website-20260825-001.html</loc>
     <lastmod>2026-08-25</lastmod>
